@@ -6,7 +6,7 @@
   </a>
 </h1>
 
-Search Chrome's bookmarks, download logs, and visit history in Alfred 4
+Search Chrome's bookmarks, download logs, and visit historys in Alfred 4
 
 ![](./imgs/demo.gif)
 
@@ -61,9 +61,9 @@ Search chrome bookmark
 
 Argument: {`Term to search`}
 
-Search chrome history
+Search chrome visit history
 
-You can append `#` to word to search urls only.
+You can append `#` to search word to search `urls` only.
 
 Example:
 
@@ -77,7 +77,7 @@ Search chrome download history
 
 ### ch > conf
 
-Open config file (conf.json)
+Open config file (`conf.json`)
 
 ## 🔖 Search Options
 
