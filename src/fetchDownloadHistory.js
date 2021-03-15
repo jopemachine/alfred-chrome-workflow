@@ -3,6 +3,7 @@ const path = require('path');
 const psl = require('psl');
 const conf = require('../conf.json');
 const {
+  existsAsync,
   getHistoryDB,
   extractHostname,
   convertChromeTimeToUnixTimestamp,
@@ -29,26 +30,33 @@ const byteSize = require('byte-size');
     });
   }
 
-  const result = downloadInfos.map((item) => {
-    const fileFileName = item.current_path.split(path.sep).pop(); 
-    const hostname = psl.get(extractHostname(item.referrer));
-    const downloadStart = convertChromeTimeToUnixTimestamp(item.start_time);
-    const fileSize = byteSize(item.total_bytes);
+  const result = await Promise.all(
+    downloadInfos.map(async (item) => {
+      const fileFileName = item.current_path.split(path.sep).pop();
+      const hostname = psl.get(extractHostname(item.referrer));
+      const downloadStart = convertChromeTimeToUnixTimestamp(item.start_time);
+      const fileSize = byteSize(item.total_bytes);
+      let subtitle = (await existsAsync(item.current_path)) ? '[O]' : '[X]';
+      subtitle += ` Downloaded in ${getLocaleString(
+        downloadStart,
+        conf.locale
+      )}, From '${hostname}'`;
 
-    return {
-      title: fileFileName,
-      subtitle: `Downloaded in ${getLocaleString(downloadStart, conf.locale)}, From '${hostname}'`,
-      arg: item.current_path,
-      mods: {
-        cmd: {
-          subtitle: 'Press enter to delete this file',
+      return {
+        title: fileFileName,
+        subtitle,
+        arg: item.current_path,
+        mods: {
+          cmd: {
+            subtitle: 'Press enter to delete this file',
+          },
+          shift: {
+            subtitle: `${fileSize.value}${fileSize.unit}`,
+          },
         },
-        shift: {
-          subtitle: `${fileSize.value}${fileSize.unit}`
-        }
-      },
-    };
-  });
+      };
+    })
+  );
 
   if (result.length === 0) {
     result.push({

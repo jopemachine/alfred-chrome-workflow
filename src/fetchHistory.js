@@ -1,8 +1,11 @@
 const alfy = require('alfy');
 const fsPromise = require('fs').promises;
+const psl = require('psl');
 const conf = require('../conf.json');
 const { getLocaleString } = require('./utils');
 const {
+  existsAsync,
+  extractHostname,
   convertChromeTimeToUnixTimestamp,
   decideTargetHistory,
   getHistoryDB,
@@ -59,12 +62,17 @@ const {
 
   const result = await Promise.all(
     historys.map(async (item) => {
-      const unixTimestamp = convertChromeTimeToUnixTimestamp(item.last_visit_time);
-      await fsPromise.writeFile(`cache/${item.id}.png`, item.image_data);
+      const unixTimestamp = convertChromeTimeToUnixTimestamp(
+        item.last_visit_time
+      );
+      const hostname = psl.get(extractHostname(item.url));
+      const favCache = `cache/${hostname}.png`;
+      !(await existsAsync(favCache)) &&
+        (await fsPromise.writeFile(`cache/${hostname}.png`, item.image_data));
 
       return {
         icon: {
-          path: `cache/${item.id}.png`
+          path: `cache/${hostname}.png`,
         },
         title: item.title,
         subtitle: getLocaleString(unixTimestamp, conf.locale),
@@ -72,7 +80,7 @@ const {
         text: {
           copy: item.url,
           largetype: item.url,
-        }
+        },
       };
     })
   );

@@ -25,6 +25,15 @@ function convertChromeTimeToUnixTimestamp (time) {
   return (Math.floor(time / 1000000 - 11644473600)) * 1000;
 }
 
+function existsAsync(path) {
+  // eslint-disable-next-line no-unused-vars
+  return new Promise(function(resolve, reject){
+    fs.exists(path, function(exists){
+      resolve(exists);
+    });
+  });
+}
+
 function extractHostname(url) {
   let hostname;
   // find & remove protocol (http, ftp, etc.) and get hostname
@@ -144,6 +153,7 @@ const getLocaleString = (datetime, locale) => {
 };
 
 module.exports = {
+  existsAsync,
   convertChromeTimeToUnixTimestamp,
   extractHostname,
   decideTargetHistory,

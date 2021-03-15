@@ -37,6 +37,7 @@
     "better-sqlite3": "^7.1.2",
     "byte-size": "^7.0.1",
     "chrome-bookmark-reader": "^0.3.0",
+    "open": "^8.0.2",
     "psl": "^1.8.0"
   },
   "files": [
@@ -45,6 +46,7 @@
     "icon.png",
     "conf.json",
     "*.md",
-    "LICENSE"
+    "LICENSE",
+    "cache/empty"
   ]
 }

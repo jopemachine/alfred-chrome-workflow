@@ -201,7 +201,7 @@
 				<key>scriptfile</key>
 				<string>index.js</string>
 				<key>subtext</key>
-				<string>Fetch chrome bookmark</string>
+				<string>Search chrome bookmark</string>
 				<key>title</key>
 				<string>chb</string>
 				<key>type</key>
@@ -288,7 +288,7 @@
 				<key>scriptfile</key>
 				<string>index.js</string>
 				<key>subtext</key>
-				<string>Fetch chrome history</string>
+				<string>Search chrome history</string>
 				<key>title</key>
 				<string>chh</string>
 				<key>type</key>
@@ -449,7 +449,7 @@
 				<key>scriptfile</key>
 				<string>index.js</string>
 				<key>subtext</key>
-				<string>Fetch chrome download history</string>
+				<string>Search chrome download history</string>
 				<key>title</key>
 				<string>chd</string>
 				<key>type</key>

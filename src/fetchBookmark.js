@@ -1,7 +1,9 @@
 const getChromeBookmark = require('chrome-bookmark-reader')
   .getChromeBookmark;
 const alfy = require('alfy');
+const psl = require('psl');
 const userName = require('os').userInfo().username;
+const { extractHostname, existsAsync } = require('./utils');
 const conf = require('../conf.json');
 const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Bookmarks`;
 
@@ -22,13 +24,23 @@ const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome
     });
   }
 
-  const result = bookmarks.map((item) => {
-    return {
-      title: item.name,
-      subtitle: item.url,
-      arg: item.url,
-    };
-  });
+  const result = await Promise.all(
+    bookmarks.map(async (item) => {
+      const hostname = psl.get(extractHostname(item.url));
+      const ret = {
+        title: item.name,
+        subtitle: item.url,
+        arg: item.url,
+      };
+
+      await existsAsync(`cache/${hostname}.png`) &&
+        (ret.icon = {
+          path: `cache/${hostname}.png`,
+        });
+
+      return ret;
+    })
+  );
 
   result.sort((a, b) => a.title > b.title ? 1 : -1);
 
