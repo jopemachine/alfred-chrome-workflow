@@ -257,6 +257,25 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>browser</key>
+				<string>com.google.Chrome</string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{query}</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>2F25A408-787B-4111-9775-2CE0BCB91390</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -302,25 +321,6 @@
 			<string>856E6081-D6D2-4B49-B2A2-EC5CBD2C2AED</string>
 			<key>version</key>
 			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>browser</key>
-				<string>com.google.Chrome</string>
-				<key>spaces</key>
-				<string></string>
-				<key>url</key>
-				<string>{query}</string>
-				<key>utf8</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openurl</string>
-			<key>uid</key>
-			<string>2F25A408-787B-4111-9775-2CE0BCB91390</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -467,6 +467,27 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string></string>
+				<key>title</key>
+				<string>File not exist</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>DC2BF326-FB82-47B9-8BAB-D1371CAE1FD3</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -486,27 +507,6 @@
 			<string>273813F9-26C5-407C-8A3C-EC5507B81569</string>
 			<key>version</key>
 			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<false/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string></string>
-				<key>title</key>
-				<string>File not exist</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>DC2BF326-FB82-47B9-8BAB-D1371CAE1FD3</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -611,114 +611,114 @@
 		<key>1161D26B-8AB7-4189-9800-50DA7AC5027B</key>
 		<dict>
 			<key>xpos</key>
-			<integer>250</integer>
+			<integer>260</integer>
 			<key>ypos</key>
-			<integer>1090</integer>
+			<integer>960</integer>
 		</dict>
 		<key>1F27A3D0-8328-465F-959D-9BDA0845119C</key>
 		<dict>
 			<key>xpos</key>
 			<integer>670</integer>
 			<key>ypos</key>
-			<integer>720</integer>
+			<integer>630</integer>
 		</dict>
 		<key>273813F9-26C5-407C-8A3C-EC5507B81569</key>
 		<dict>
 			<key>xpos</key>
-			<integer>415</integer>
+			<integer>425</integer>
 			<key>ypos</key>
-			<integer>955</integer>
+			<integer>825</integer>
 		</dict>
 		<key>2F25A408-787B-4111-9775-2CE0BCB91390</key>
 		<dict>
 			<key>xpos</key>
-			<integer>415</integer>
+			<integer>435</integer>
 			<key>ypos</key>
-			<integer>480</integer>
+			<integer>410</integer>
 		</dict>
 		<key>3AA149C3-ADEA-4B6C-922D-138A350C7256</key>
 		<dict>
 			<key>xpos</key>
-			<integer>240</integer>
+			<integer>250</integer>
 			<key>ypos</key>
-			<integer>200</integer>
+			<integer>115</integer>
 		</dict>
 		<key>63637455-FF68-4168-93DE-F7ABAC79E02D</key>
 		<dict>
 			<key>xpos</key>
-			<integer>575</integer>
+			<integer>585</integer>
 			<key>ypos</key>
-			<integer>1025</integer>
+			<integer>895</integer>
 		</dict>
 		<key>697C0A74-8A26-4EA0-8457-3297B47ABA0F</key>
 		<dict>
 			<key>xpos</key>
-			<integer>590</integer>
+			<integer>585</integer>
 			<key>ypos</key>
-			<integer>800</integer>
+			<integer>690</integer>
 		</dict>
 		<key>82C3E168-EA06-42D9-BBC4-7D86E86E2C32</key>
 		<dict>
 			<key>xpos</key>
-			<integer>415</integer>
+			<integer>430</integer>
 			<key>ypos</key>
-			<integer>200</integer>
+			<integer>115</integer>
 		</dict>
 		<key>856E6081-D6D2-4B49-B2A2-EC5CBD2C2AED</key>
 		<dict>
 			<key>xpos</key>
 			<integer>245</integer>
 			<key>ypos</key>
-			<integer>480</integer>
+			<integer>415</integer>
 		</dict>
 		<key>93F0E971-8109-410F-855D-1D5E577768AB</key>
 		<dict>
 			<key>xpos</key>
-			<integer>420</integer>
+			<integer>430</integer>
 			<key>ypos</key>
-			<integer>825</integer>
+			<integer>695</integer>
 		</dict>
 		<key>9A6A532E-C1BA-49EC-8A21-3DC2918C767B</key>
 		<dict>
 			<key>xpos</key>
 			<integer>670</integer>
 			<key>ypos</key>
-			<integer>1070</integer>
+			<integer>935</integer>
 		</dict>
 		<key>B7B17815-9490-4EF3-8A04-D575ACD5209E</key>
 		<dict>
 			<key>xpos</key>
-			<integer>415</integer>
+			<integer>430</integer>
 			<key>ypos</key>
-			<integer>340</integer>
+			<integer>255</integer>
 		</dict>
 		<key>D6F8EF9E-19CC-4233-BB09-19783A57BED9</key>
 		<dict>
 			<key>xpos</key>
-			<integer>415</integer>
+			<integer>430</integer>
 			<key>ypos</key>
-			<integer>605</integer>
+			<integer>535</integer>
 		</dict>
 		<key>DC2BF326-FB82-47B9-8BAB-D1371CAE1FD3</key>
 		<dict>
 			<key>xpos</key>
 			<integer>670</integer>
 			<key>ypos</key>
-			<integer>955</integer>
+			<integer>820</integer>
 		</dict>
 		<key>E30D9926-52B9-4AEC-A3D9-0098D40FA711</key>
 		<dict>
 			<key>xpos</key>
-			<integer>245</integer>
+			<integer>255</integer>
 			<key>ypos</key>
-			<integer>850</integer>
+			<integer>700</integer>
 		</dict>
 		<key>FCA1C1CE-7E42-42DD-B32A-360E0B9A36EA</key>
 		<dict>
 			<key>xpos</key>
-			<integer>415</integer>
+			<integer>425</integer>
 			<key>ypos</key>
-			<integer>1090</integer>
+			<integer>960</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>

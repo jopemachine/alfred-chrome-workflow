@@ -10,6 +10,9 @@ const defaultConfig = {
   },
   'chd': {
     'sort': 'DESC'
+  },
+  'chb': {
+    'sort': 'VISIT_FREQ'
   }
 };
 

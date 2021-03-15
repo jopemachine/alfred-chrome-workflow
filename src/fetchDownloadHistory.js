@@ -1,5 +1,6 @@
 const alfy = require('alfy');
 const path = require('path');
+const byteSize = require('byte-size');
 const psl = require('psl');
 const conf = require('../conf.json');
 const {
@@ -9,7 +10,6 @@ const {
   convertChromeTimeToUnixTimestamp,
   getLocaleString,
 } = require('./utils');
-const byteSize = require('byte-size');
 
 (async function() {
   let downloadInfos = getHistoryDB()

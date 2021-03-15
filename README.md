@@ -55,6 +55,8 @@ Argument: {`Term to search`}
 
 Search chrome bookmark
 
+(Could be sorted by `visit counts`, `alphabet`)
+
 ### chh { Argument }
 
 Argument: {`Term to search`}
@@ -75,17 +77,13 @@ Search chrome download history
 
 ## 🔖 Search Options
 
+### common
+
 * **chrome_profile**
 
 Type: `string`
 
 Your chrome profile name.
-
-* **result_limit**
-
-Type: `number`
-
-Displays as many search results in `chh` search as `result_limit`.
 
 * **locale**
 
@@ -94,6 +92,14 @@ Type: `string (enum)`
 Determines whether to display some string values in Korean or English.
 
 Possible values: `ko-KR` or `en`
+
+### chh
+
+* **result_limit**
+
+Type: `number`
+
+Displays as many search results in `chh` search as `result_limit`.
 
 * **history_sort**
 
@@ -110,3 +116,19 @@ Recommended Value:
 Type: `boolean`
 
 Removes items with duplicate title names.
+
+### chd
+
+* **sort**
+
+Type: `string (enum)`
+
+Sort by `DESC` or `ASC`
+
+### chb
+
+* **sort**
+
+Type: `string (enum)`
+
+Sort by `VISIT_FREQ` or `ALPHABET`

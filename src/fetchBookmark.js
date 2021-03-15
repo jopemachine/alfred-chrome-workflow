@@ -2,9 +2,14 @@ const getChromeBookmark = require('chrome-bookmark-reader').getChromeBookmark;
 const alfy = require('alfy');
 const psl = require('psl');
 const userName = require('os').userInfo().username;
-const { extractHostname, existsAsync } = require('./utils');
+const { extractHostname, existsAsync, getHistoryDB } = require('./utils');
 const conf = require('../conf.json');
 const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Bookmarks`;
+
+const options = {};
+if (process.argv[3]) {
+  options[process.argv[3].split('--')[1]] = true;
+}
 
 (async function () {
   let bookmarks = getChromeBookmark(targetPath);
@@ -41,7 +46,32 @@ const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome
     })
   );
 
-  result.sort((a, b) => (a.title > b.title ? 1 : -1));
+  if (conf.chb.sort === 'VISIT_FREQ') {
+    const historyDB = getHistoryDB();
+    let visitHistorys = historyDB.prepare('SELECT url FROM urls').all();
+
+    const freqs = {};
+    for (const history of visitHistorys) {
+      const key = history.url;
+      if (freqs[key]) {
+        freqs[key] = freqs[key] + 1;
+      } else {
+        freqs[key] = 1;
+      }
+    }
+
+    result.sort((a, b) => {
+      const key1 = a.subtitle;
+      const key2 = b.subtitle;
+
+      if (freqs[key1] && freqs[key2]) return freqs[key2] - freqs[key1];
+      else if (freqs[key1]) return -1;
+      else if (freqs[key2]) return 1;
+      else a.title > b.title ? 1 : -1;
+    });
+  } else {
+    result.sort((a, b) => (a.title > b.title ? 1 : -1));
+  }
 
   if (result.length === 0) {
     result.push({
