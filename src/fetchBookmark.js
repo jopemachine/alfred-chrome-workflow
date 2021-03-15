@@ -3,8 +3,8 @@ const getChromeBookmark = require('chrome-bookmark-reader')
 const alfy = require('alfy');
 const userName = require('os').userInfo().username;
 const conf = require('../conf.json');
-// const { getLocaleString } = require('./utils');
 const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Bookmarks`;
+// const { getLocaleString } = require('./utils');
 
 (async function() {
   let bookmarks = getChromeBookmark(targetPath);

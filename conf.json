@@ -1,5 +1,6 @@
 {
     "chrome_profile": "Profile 3",
     "result_limit": 50,
-    "locale": "ko-KR"
+    "locale": "ko-KR",
+    "history_sort": "last_visit_time DESC"
 }

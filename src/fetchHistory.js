@@ -1,17 +1,34 @@
 // const path = require('path');
 const alfy = require('alfy');
+const fsPromise = require('fs').promises;
 const conf = require('../conf.json');
 const { getLocaleString } = require('./utils');
-const { getHistoryDB } = require('./utils');
+const { getHistoryDB, getFaviconDB } = require('./utils');
 
 (async function() {
-  const input = alfy.input ? alfy.input.normalize() : null;
+  const input = alfy.input ? alfy.input.normalize() : '';
 
-  let historys = getHistoryDB()
+  const historyDB = getHistoryDB();
+  getFaviconDB();
+  historyDB.prepare('ATTACH DATABASE \'./_favicon.db\' AS favicons').run();
+
+  let historys = historyDB
     .prepare(
-      `SELECT url, title, last_visit_time FROM urls ORDER BY last_visit_time DESC LIMIT ${conf.result_limit}`
+      `
+      SELECT urls.id, urls.title, urls.url, urls.last_visit_time, favicon_bitmaps.image_data, favicon_bitmaps.last_updated
+          FROM urls
+              LEFT OUTER JOIN icon_mapping ON icon_mapping.page_url = urls.url,
+                  favicon_bitmaps ON favicon_bitmaps.id =
+                      (SELECT id FROM favicon_bitmaps
+                          WHERE favicon_bitmaps.icon_id = icon_mapping.icon_id
+                          ORDER BY width DESC LIMIT 1)
+          WHERE (urls.title LIKE '%${input}%' OR urls.url LIKE '%${input}%')
+          ORDER BY ${conf.history_sort}
+      `
     )
     .all();
+
+  historys = historys.slice(0, 20);
 
   if (input) {
     historys = historys.filter(item => {
@@ -27,14 +44,24 @@ const { getHistoryDB } = require('./utils');
     });
   }
 
-  const result = historys.map((item) => {
-    const unixTimestamp = Math.floor(((item.last_visit_time / 1000000) - 11644473600));
-    return {
-      title: item.title,
-      subtitle: getLocaleString(unixTimestamp * 1000, conf.locale),
-      arg: item.url,
-    };
-  });
+  const result = await Promise.all(
+    historys.map(async (item) => {
+      const unixTimestamp = Math.floor(
+        item.last_visit_time / 1000000 - 11644473600
+      );
+
+      await fsPromise.writeFile(`cache/${item.id}.png`, item.image_data);
+
+      return {
+        icon: {
+          path: `cache/${item.id}.png`
+        },
+        title: item.title,
+        subtitle: getLocaleString(unixTimestamp * 1000, conf.locale),
+        arg: item.url,
+      };
+    })
+  );
 
   alfy.output(result);
 }) ();

@@ -11,7 +11,7 @@ function getHistoryDB () {
 }
 
 function getFaviconDB () {
-  const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Favicon`;
+  const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Favicons`;
   fs.copyFileSync(targetPath, FAVICON_DB);
   return require('better-sqlite3')(FAVICON_DB, sqliteOptions);
 }
