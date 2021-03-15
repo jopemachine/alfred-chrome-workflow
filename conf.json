@@ -1,12 +1,12 @@
-{
-    "locale": "ko-KR",
-    "chrome_profile": "Default",
-    "chh": {
-        "result_limit": 50,
-        "delete_duplicate": true,
-        "history_sort": "last_visit_time DESC"
-    },
-    "chd": {
-        "sort": "DESC"
-    }
+﻿{
+  "locale": "en",
+  "chrome_profile": "Default",
+  "chh": {
+    "result_limit": 50,
+    "delete_duplicate": true,
+    "history_sort": "last_visit_time DESC"
+  },
+  "chd": {
+    "sort": "DESC"
+  }
 }

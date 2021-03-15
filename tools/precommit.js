@@ -1,11 +1,16 @@
 const fs = require('fs');
 
 const defaultConfig = {
-  'chrome_profile': 'Default',
-  'result_limit': 50,
   'locale': 'en',
-  'history_sort': 'last_visit_time DESC',
-  'delete_duplicate': true
+  'chrome_profile': 'Default',
+  'chh': {
+    'result_limit': 50,
+    'delete_duplicate': true,
+    'history_sort': 'last_visit_time DESC'
+  },
+  'chd': {
+    'sort': 'DESC'
+  }
 };
 
 fs.writeFileSync(
