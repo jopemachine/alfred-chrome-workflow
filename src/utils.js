@@ -1,3 +1,21 @@
+const userName = require('os').userInfo().username;
+const conf = require('../conf.json');
+const sqliteOptions = { readonly: true, fileMustExist: true };
+const fs = require('fs');
+const { HISTORY_DB, FAVICON_DB } = require('./constant');
+
+function getHistoryDB () {
+  const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/History`;
+  fs.copyFileSync(targetPath, HISTORY_DB);
+  return require('better-sqlite3')(HISTORY_DB, sqliteOptions);
+}
+
+function getFaviconDB () {
+  const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Favicon`;
+  fs.copyFileSync(targetPath, FAVICON_DB);
+  return require('better-sqlite3')(FAVICON_DB, sqliteOptions);
+}
+
 function replaceAll (string, search, replace) {
   return string.split(search).join(replace);
 }
@@ -80,6 +98,8 @@ const getLocaleString = (datetime, locale) => {
 };
 
 module.exports = {
+  getHistoryDB,
+  getFaviconDB,
   getLocaleString,
   replaceAll,
 };

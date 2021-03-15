@@ -26,8 +26,7 @@
   "homepage": "https://github.com/jopemachine/alfred-chrome-workflow#readme",
   "dependencies": {
     "alfy": "^0.10.0",
-    "chrome-bookmark-reader": "^0.3.0",
-    "chrome-history-reader": "^0.0.3",
-    "os-locale": "^5.0.0"
+    "better-sqlite3": "^7.1.2",
+    "chrome-bookmark-reader": "^0.3.0"
   }
 }
