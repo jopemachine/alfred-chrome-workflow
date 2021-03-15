@@ -6,7 +6,9 @@
   </a>
 </h1>
 
-Search Chrome's bookmarks and history.
+Search Chrome's bookmarks, download logs, and history.
+
+![](./imgs/demo.gif)
 
 ##  🔨 How to install
 
@@ -16,9 +18,13 @@ Search Chrome's bookmarks and history.
 $ npm install --global alfred-chrome-workflow
 ```
 
-2. Check your `chrome_profile` on `/Users/<username>/Library/Application Support/Google/Chrome/<chrome_profile>/`. default value is set by `Default`.
+2. **Check your `chrome_profile` on `/Users/<username>/Library/Application Support/Google/Chrome/<chrome_profile>/`. default value is set by `Default`.**
 
-3. If your `chrome_profile` is not default, change `chrome_profile` of `conf.json` to your profile name.
+If chrome_profile is not proper, you will encounter below error.
+
+![](./imgs/profile_name_error.png)
+
+3. **If your `chrome_profile` is not default, change `chrome_profile` of `conf.json` to your profile name.**
 
 ## 📋 Features
 
