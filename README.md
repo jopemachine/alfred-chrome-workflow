@@ -37,9 +37,52 @@ The prerequisites below are required to use that package.
 * [Alfred powerpack](https://www.alfredapp.com/powerpack/)
 
 
-### Usage
+## 📗 How to use
 
+### chb { Argument }
 
-last_visit_time DESC
+Argument: {`Term to search`}
 
-visit_count DESC, typed_count DESC, last_visit_time DESC
+Search chrome bookmark
+
+### chh { Argument }
+
+Argument: {`Term to search`}
+
+Search chrome history
+
+### chd { Argument }
+
+Argument: {`Term to search`}
+
+Search chrome download history
+
+## 🔖 Search Options
+
+* **chrome_profile**
+
+Type: `string`
+
+Your chrome profile name.
+
+* **result_limit**
+
+Type: `number`
+
+Displays as many search results in `chh` search as `result_limit`.
+
+* **locale**
+
+Type: `string (enum)`
+
+Determines whether to display some string values in Korean or English.
+
+* **history_sort**
+
+Type: `string`
+
+Determine what to sort the search results in `chh`.
+
+Recommended Value:
+
+`last_visit_time DESC` Or `visit_count DESC, typed_count DESC, last_visit_time DESC`

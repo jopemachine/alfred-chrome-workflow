@@ -28,6 +28,7 @@ const { getHistoryDB, getFaviconDB } = require('./utils');
     )
     .all();
 
+  const wholeLogLen = historys.length;
   historys = historys.slice(0, 20);
 
   if (input) {
@@ -62,6 +63,25 @@ const { getHistoryDB, getFaviconDB } = require('./utils');
       };
     })
   );
+
+  if (result === 0) {
+    result.push({
+      valid: true,
+      title: 'No logs were found.',
+      autocomplete: 'No logs were found.',
+      subtitle: '',
+      text: {
+        copy: 'No logs were found.',
+        largetype: 'No logs were found.',
+      },
+    });
+  } else {
+    result.splice(0, 0, {
+      valid: true,
+      title: `${wholeLogLen} logs were found.`,
+      subtitle: `${result.length} shows up`,
+    });
+  }
 
   alfy.output(result);
 }) ();

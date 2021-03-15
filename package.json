@@ -1,4 +1,16 @@
 {
+  "author": {
+    "name": "jopemachine",
+    "email": "jopemachine@gmail.com",
+    "url": "https://github.com/jopemachine/alfred-chrome-workflow"
+  },
+  "bugs": {
+    "url": "https://github.com/jopemachine/alfred-chrome-workflow/issues"
+  },
+  "deprecated": false,
+  "engines": {
+    "node": ">=4"
+  },
   "name": "alfred-chrome-workflow",
   "version": "0.0.1",
   "description": "Search Chrome's bookmarks and history.",
@@ -18,15 +30,19 @@
     "alfy",
     "chrome-history"
   ],
-  "author": "jopemachine",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jopemachine/alfred-chrome-workflow/issues"
-  },
   "homepage": "https://github.com/jopemachine/alfred-chrome-workflow#readme",
   "dependencies": {
     "alfy": "^0.10.0",
     "better-sqlite3": "^7.1.2",
     "chrome-bookmark-reader": "^0.3.0"
-  }
+  },
+  "files": [
+    "info.plist",
+    "src/*.js",
+    "icon.png",
+    "conf.json",
+    "*.md",
+    "LICENSE"
+  ]
 }
