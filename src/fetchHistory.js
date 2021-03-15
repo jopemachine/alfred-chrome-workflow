@@ -4,6 +4,7 @@ const psl = require('psl');
 const conf = require('../conf.json');
 const { getLocaleString } = require('./utils');
 const {
+  handleInput,
   existsAsync,
   extractHostname,
   convertChromeTimeToUnixTimestamp,
@@ -13,7 +14,10 @@ const {
 } = require('./utils');
 
 (async function() {
-  const input = alfy.input ? alfy.input.normalize() : '';
+  let input = alfy.input ? alfy.input.normalize() : '';
+  input = handleInput(input);
+  const domainQuery = input.domain !== '' ? input.domain : input.query;
+  const titleQuery = input.query;
 
   const historyDB = getHistoryDB();
   getFaviconDB();
@@ -29,7 +33,7 @@ const {
                       (SELECT id FROM favicon_bitmaps
                           WHERE favicon_bitmaps.icon_id = icon_mapping.icon_id
                           ORDER BY width DESC LIMIT 1)
-          WHERE (urls.title LIKE '%${input}%' OR urls.url LIKE '%${input}%')
+          WHERE (urls.title LIKE '%${titleQuery}%' ${domainQuery !== '' ? 'AND' : 'OR' } urls.url LIKE '%${domainQuery}%')
           ORDER BY ${conf.chh.history_sort}
       `
     )
@@ -44,20 +48,6 @@ const {
     deletedItems = deleted;
   } else {
     historys = historys.slice(0, conf.chh.result_limit);
-  }
-
-  if (input) {
-    historys = historys.filter(item => {
-      const htmlTitle = item.title.toLowerCase();
-      const url = item.url.toLowerCase();
-      const loweredInput = input.normalize().toLowerCase();
-
-      if (htmlTitle === '') return false;
-      if (htmlTitle.includes(loweredInput) || url.includes(loweredInput)) {
-        return true;
-      }
-      return false;
-    });
   }
 
   const result = await Promise.all(

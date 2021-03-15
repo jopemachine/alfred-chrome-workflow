@@ -5,6 +5,29 @@ const fs = require('fs');
 const { HISTORY_DB, FAVICON_DB } = require('./constant');
 const sqlite = require('better-sqlite3');
 
+const handleInput = (str) => {
+  let query = '';
+  let domain = '';
+
+  if (str.includes('#')) {
+    const words = str.split(' ');
+    for (const word of words) {
+      if (word.startsWith('#')) {
+        domain = word.substr(1, word.length - 1);
+      } else {
+        query += (query === '' ? word : ' ' + word);
+      }
+    }
+  } else {
+    query = str;
+  }
+
+  return {
+    query,
+    domain,
+  };
+};
+
 function getHistoryDB () {
   const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/History`;
   fs.copyFileSync(targetPath, HISTORY_DB);
@@ -153,6 +176,7 @@ const getLocaleString = (datetime, locale) => {
 };
 
 module.exports = {
+  handleInput,
   existsAsync,
   convertChromeTimeToUnixTimestamp,
   extractHostname,

@@ -12,7 +12,9 @@ const {
 const byteSize = require('byte-size');
 
 (async function() {
-  let downloadInfos = getHistoryDB().prepare(`SELECT * FROM downloads ORDER BY start_time ${conf.chd.sort}`).all();
+  let downloadInfos = getHistoryDB()
+    .prepare(`SELECT * FROM downloads ORDER BY start_time ${conf.chd.sort}`)
+    .all();
   const input = alfy.input ? alfy.input.normalize() : null;
 
   if (input) {

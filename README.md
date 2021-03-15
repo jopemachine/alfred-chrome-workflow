@@ -61,6 +61,12 @@ Argument: {`Term to search`}
 
 Search chrome history
 
+You can append `#` to word to search urls only.
+
+Example:
+
+`chh #youtube [some_word_to_search]`
+
 ### chd { Argument }
 
 Argument: {`Term to search`}
@@ -87,6 +93,8 @@ Type: `string (enum)`
 
 Determines whether to display some string values in Korean or English.
 
+Possible values: `ko-KR` or `en`
+
 * **history_sort**
 
 Type: `string`
@@ -96,3 +104,9 @@ Determine what to sort the search results in `chh`.
 Recommended Value:
 
 `last_visit_time DESC` Or `visit_count DESC, typed_count DESC, last_visit_time DESC`
+
+* **delete_duplicate**
+
+Type: `boolean`
+
+Removes items with duplicate title names.
