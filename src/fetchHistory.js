@@ -3,7 +3,7 @@ const alfy = require('alfy');
 const fsPromise = require('fs').promises;
 const conf = require('../conf.json');
 const { getLocaleString } = require('./utils');
-const { getHistoryDB, getFaviconDB } = require('./utils');
+const { decideTargetHistory, getHistoryDB, getFaviconDB } = require('./utils');
 
 (async function() {
   const input = alfy.input ? alfy.input.normalize() : '';
@@ -28,8 +28,16 @@ const { getHistoryDB, getFaviconDB } = require('./utils');
     )
     .all();
 
+  let deletedItems;
   const wholeLogLen = historys.length;
-  historys = historys.slice(0, 20);
+
+  if (conf.delete_duplicate) {
+    const { targetHistory, deleted } = decideTargetHistory(historys);
+    historys = targetHistory;
+    deletedItems = deleted;
+  } else {
+    historys = historys.slice(0, conf.result_limit);
+  }
 
   if (input) {
     historys = historys.filter(item => {
@@ -60,11 +68,15 @@ const { getHistoryDB, getFaviconDB } = require('./utils');
         title: item.title,
         subtitle: getLocaleString(unixTimestamp * 1000, conf.locale),
         arg: item.url,
+        text: {
+          copy: item.url,
+          largetype: item.url,
+        }
       };
     })
   );
 
-  if (result === 0) {
+  if (result.length === 0) {
     result.push({
       valid: true,
       title: 'No logs were found.',
@@ -79,7 +91,9 @@ const { getHistoryDB, getFaviconDB } = require('./utils');
     result.splice(0, 0, {
       valid: true,
       title: `${wholeLogLen} logs were found.`,
-      subtitle: `${result.length} shows up`,
+      subtitle: `${result.length} shows up ${
+        deletedItems ? `(${deletedItems} deleted due to duplication)` : ''
+      }`,
     });
   }
 

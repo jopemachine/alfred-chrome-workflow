@@ -4,7 +4,8 @@ const defaultConfig = {
   'chrome_profile': 'Default',
   'result_limit': 50,
   'locale': 'en',
-  'history_sort': 'last_visit_time DESC'
+  'history_sort': 'last_visit_time DESC',
+  'delete_duplicate': true
 };
 
 fs.writeFileSync(

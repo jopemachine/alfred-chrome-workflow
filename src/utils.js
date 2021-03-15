@@ -20,6 +20,31 @@ function replaceAll (string, search, replace) {
   return string.split(search).join(replace);
 }
 
+const decideTargetHistory = (historys) => {
+  let idx = 0;
+  let deleted = 0;
+  let prevTitle;
+  const targetHistory = [];
+
+  for (const historyItem of historys) {
+    if (idx >= conf.result_limit) {
+      break;
+    }
+    if (historyItem.title === prevTitle) {
+      ++deleted;
+      continue;
+    }
+    prevTitle = historyItem.title;
+    ++idx;
+    targetHistory.push(historyItem);
+  }
+
+  return {
+    targetHistory,
+    deleted
+  };
+};
+
 const getLocaleString = (datetime, locale) => {
   const dateObj = new Date(datetime);
 
@@ -98,6 +123,7 @@ const getLocaleString = (datetime, locale) => {
 };
 
 module.exports = {
+  decideTargetHistory,
   getHistoryDB,
   getFaviconDB,
   getLocaleString,

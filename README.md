@@ -22,7 +22,7 @@ $ npm install --global alfred-chrome-workflow
 
 * Search Chrome's Bookmark
 
-* Search Chrome's download logs
+* Search Chrome's Download logs
 
 * You can change your search config details
 
