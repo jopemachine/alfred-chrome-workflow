@@ -35,7 +35,9 @@
   "dependencies": {
     "alfy": "^0.10.0",
     "better-sqlite3": "^7.1.2",
-    "chrome-bookmark-reader": "^0.3.0"
+    "byte-size": "^7.0.1",
+    "chrome-bookmark-reader": "^0.3.0",
+    "psl": "^1.8.0"
   },
   "files": [
     "info.plist",

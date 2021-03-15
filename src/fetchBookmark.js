@@ -4,7 +4,6 @@ const alfy = require('alfy');
 const userName = require('os').userInfo().username;
 const conf = require('../conf.json');
 const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Bookmarks`;
-// const { getLocaleString } = require('./utils');
 
 (async function() {
   let bookmarks = getChromeBookmark(targetPath);
@@ -32,5 +31,24 @@ const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome
   });
 
   result.sort((a, b) => a.title > b.title ? 1 : -1);
+
+  if (result.length === 0) {
+    result.push({
+      valid: true,
+      title: 'No bookmarks were found.',
+      autocomplete: 'No bookmarks were found.',
+      subtitle: '',
+      text: {
+        copy: 'No bookmarks were found.',
+        largetype: 'No bookmarks were found.',
+      },
+    });
+  } else {
+    result.splice(0, 0, {
+      valid: true,
+      title: `${result.length} bookmarks were found.`,
+    });
+  }
+
   alfy.output(result);
 }) ();

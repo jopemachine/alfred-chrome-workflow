@@ -1,9 +1,13 @@
-// const path = require('path');
 const alfy = require('alfy');
 const fsPromise = require('fs').promises;
 const conf = require('../conf.json');
 const { getLocaleString } = require('./utils');
-const { decideTargetHistory, getHistoryDB, getFaviconDB } = require('./utils');
+const {
+  convertChromeTimeToUnixTimestamp,
+  decideTargetHistory,
+  getHistoryDB,
+  getFaviconDB,
+} = require('./utils');
 
 (async function() {
   const input = alfy.input ? alfy.input.normalize() : '';
@@ -23,7 +27,7 @@ const { decideTargetHistory, getHistoryDB, getFaviconDB } = require('./utils');
                           WHERE favicon_bitmaps.icon_id = icon_mapping.icon_id
                           ORDER BY width DESC LIMIT 1)
           WHERE (urls.title LIKE '%${input}%' OR urls.url LIKE '%${input}%')
-          ORDER BY ${conf.history_sort}
+          ORDER BY ${conf.chh.history_sort}
       `
     )
     .all();
@@ -31,12 +35,12 @@ const { decideTargetHistory, getHistoryDB, getFaviconDB } = require('./utils');
   let deletedItems;
   const wholeLogLen = historys.length;
 
-  if (conf.delete_duplicate) {
+  if (conf.chh.delete_duplicate) {
     const { targetHistory, deleted } = decideTargetHistory(historys);
     historys = targetHistory;
     deletedItems = deleted;
   } else {
-    historys = historys.slice(0, conf.result_limit);
+    historys = historys.slice(0, conf.chh.result_limit);
   }
 
   if (input) {
@@ -55,10 +59,7 @@ const { decideTargetHistory, getHistoryDB, getFaviconDB } = require('./utils');
 
   const result = await Promise.all(
     historys.map(async (item) => {
-      const unixTimestamp = Math.floor(
-        item.last_visit_time / 1000000 - 11644473600
-      );
-
+      const unixTimestamp = convertChromeTimeToUnixTimestamp(item.last_visit_time);
       await fsPromise.writeFile(`cache/${item.id}.png`, item.image_data);
 
       return {
@@ -66,7 +67,7 @@ const { decideTargetHistory, getHistoryDB, getFaviconDB } = require('./utils');
           path: `cache/${item.id}.png`
         },
         title: item.title,
-        subtitle: getLocaleString(unixTimestamp * 1000, conf.locale),
+        subtitle: getLocaleString(unixTimestamp, conf.locale),
         arg: item.url,
         text: {
           copy: item.url,

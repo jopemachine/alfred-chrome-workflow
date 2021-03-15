@@ -1,7 +1,12 @@
 {
-    "chrome_profile": "Profile 3",
-    "result_limit": 50,
     "locale": "ko-KR",
-    "history_sort": "last_visit_time DESC",
-    "delete_duplicate": true
+    "chrome_profile": "Default",
+    "chh": {
+        "result_limit": 50,
+        "delete_duplicate": true,
+        "history_sort": "last_visit_time DESC"
+    },
+    "chd": {
+        "sort": "DESC"
+    }
 }

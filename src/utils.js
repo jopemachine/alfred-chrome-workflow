@@ -3,21 +3,44 @@ const conf = require('../conf.json');
 const sqliteOptions = { readonly: true, fileMustExist: true };
 const fs = require('fs');
 const { HISTORY_DB, FAVICON_DB } = require('./constant');
+const sqlite = require('better-sqlite3');
 
 function getHistoryDB () {
   const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/History`;
   fs.copyFileSync(targetPath, HISTORY_DB);
-  return require('better-sqlite3')(HISTORY_DB, sqliteOptions);
+  return sqlite(HISTORY_DB, sqliteOptions);
 }
 
 function getFaviconDB () {
   const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Favicons`;
   fs.copyFileSync(targetPath, FAVICON_DB);
-  return require('better-sqlite3')(FAVICON_DB, sqliteOptions);
+  return sqlite(FAVICON_DB, sqliteOptions);
 }
 
 function replaceAll (string, search, replace) {
   return string.split(search).join(replace);
+}
+
+function convertChromeTimeToUnixTimestamp (time) {
+  return (Math.floor(time / 1000000 - 11644473600)) * 1000;
+}
+
+function extractHostname(url) {
+  let hostname;
+  // find & remove protocol (http, ftp, etc.) and get hostname
+
+  if (url.indexOf('//') > -1) {
+    hostname = url.split('/')[2];
+  } else {
+    hostname = url.split('/')[0];
+  }
+
+  // find & remove port number
+  hostname = hostname.split(':')[0];
+  // find & remove "?"
+  hostname = hostname.split('?')[0];
+
+  return hostname;
 }
 
 const decideTargetHistory = (historys) => {
@@ -27,7 +50,7 @@ const decideTargetHistory = (historys) => {
   const targetHistory = [];
 
   for (const historyItem of historys) {
-    if (idx >= conf.result_limit) {
+    if (idx >= conf.chh.result_limit) {
       break;
     }
     if (historyItem.title === prevTitle) {
@@ -54,11 +77,9 @@ const getLocaleString = (datetime, locale) => {
 
   const hour =
     // AM 12
-    // eslint-disable-next-line multiline-ternary
     dateObj.getHours() === 0
       ? 12
       : // PM 12
-      // eslint-disable-next-line multiline-ternary
       dateObj.getHours() === 12
         ? 12
         : // Other times
@@ -123,6 +144,8 @@ const getLocaleString = (datetime, locale) => {
 };
 
 module.exports = {
+  convertChromeTimeToUnixTimestamp,
+  extractHostname,
   decideTargetHistory,
   getHistoryDB,
   getFaviconDB,
