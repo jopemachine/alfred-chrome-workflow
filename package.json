@@ -1,0 +1,33 @@
+{
+  "name": "alfred-chrome-workflow",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "alfy-init",
+    "preuninstall": "alfy-cleanup",
+    "cp": "cp _conf.json conf.json",
+    "cl": "node tools/precommit.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jopemachine/alfred-chrome-workflow.git"
+  },
+  "keywords": [
+    "alfred",
+    "alfy",
+    "chrome-history"
+  ],
+  "author": "jopemachine",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jopemachine/alfred-chrome-workflow/issues"
+  },
+  "homepage": "https://github.com/jopemachine/alfred-chrome-workflow#readme",
+  "dependencies": {
+    "alfy": "^0.10.0",
+    "chrome-bookmark-reader": "^0.3.0",
+    "chrome-history-reader": "^0.0.3",
+    "os-locale": "^5.0.0"
+  }
+}
