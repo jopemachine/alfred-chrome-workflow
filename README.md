@@ -6,7 +6,7 @@
   </a>
 </h1>
 
-Search Chrome's bookmarks, download logs, and history.
+Search Chrome's bookmarks, download logs, and history in Alfred 4
 
 ![](./imgs/demo.gif)
 
@@ -28,13 +28,13 @@ If chrome_profile is not proper, you will encounter below error.
 
 ## 📋 Features
 
-* Search Chrome's Visit History
+* *Search Chrome's Visit History*
 
-* Search Chrome's Bookmark
+* *Search Chrome's Bookmark sorted by visit counts*
 
-* Search Chrome's Download logs
+* *Search Chrome's Download logs*
 
-* You can change your search config details
+* *You can change your search config details*
 
 ## 📌 Prerequisite
 
@@ -74,6 +74,10 @@ Example:
 Argument: {`Term to search`}
 
 Search chrome download history
+
+### ch > conf
+
+Open config file (conf.json)
 
 ## 🔖 Search Options
 
