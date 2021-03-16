@@ -12,6 +12,7 @@ const {
   getHistoryDB,
   getFaviconDB,
 } = require('./utils');
+const { FAVICON_DB } = require('./constant');
 
 (async function() {
   let input = alfy.input ? alfy.input.normalize() : '';
@@ -21,7 +22,7 @@ const {
 
   const historyDB = getHistoryDB();
   getFaviconDB();
-  historyDB.prepare('ATTACH DATABASE \'./_favicon.db\' AS favicons').run();
+  historyDB.prepare(`ATTACH DATABASE './${FAVICON_DB}' AS favicons`).run();
 
   let historys = historyDB
     .prepare(

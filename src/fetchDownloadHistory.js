@@ -44,7 +44,7 @@ const {
         conf.locale
       )}, From '${hostname}'`;
 
-      return {
+      const ret = {
         title: fileFileName,
         subtitle,
         arg: item.current_path,
@@ -57,6 +57,13 @@ const {
           },
         },
       };
+
+      (await existsAsync(`cache/${hostname}.png`)) &&
+        (ret.icon = {
+          path: `cache/${hostname}.png`,
+        });
+
+      return ret;
     })
   );
 

@@ -26,15 +26,21 @@ If chrome_profile is not proper, you will encounter below error.
 
 3. **If your `chrome_profile` is not default, change `chrome_profile` of `conf.json` to your profile name.**
 
+4. **(Optional, Recommended) You can cache favicon images in advance by executing `ch > cache`**
+
+By proceeding with the above process, you can assign favicon to the items of `chb` and increase search speed.
+
 ## 📋 Features
 
-* *Search Chrome's Visit History*
+* *Search Chrome's Visit History `(chh)`*
 
-* *Search Chrome's Bookmark sorted by visit counts*
+* *Search Chrome's Bookmark sorted by visit counts `(chb)`*
 
-* *Search Chrome's Download logs*
+* *Search Chrome's Download logs `(chd)`*
 
-* *You can change your search config details*
+* *Search on Google with Chrome's search history `(chs)`*
+
+* *You can change your search config details `(ch > conf)`*
 
 ## 📌 Prerequisite
 
@@ -75,9 +81,19 @@ Argument: {`Term to search`}
 
 Search chrome download history
 
+### chs { Argument }
+
+Argument: {`Term to search`}
+
+Search your query based on visit history
+
 ### ch > conf
 
 Open config file (`conf.json`)
+
+### ch > cache
+
+Cache favicon images from your visit history in advance
 
 ## 🔖 Search Options
 
@@ -136,3 +152,11 @@ Sort by `DESC` or `ASC`
 Type: `string (enum)`
 
 Sort by `VISIT_FREQ` or `ALPHABET`
+
+### chs
+
+* **result_limit**
+
+Type: `number`
+
+Displays as many search results in `chh` search as `result_limit`.

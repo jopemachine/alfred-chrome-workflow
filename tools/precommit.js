@@ -13,6 +13,9 @@ const defaultConfig = {
   },
   'chb': {
     'sort': 'VISIT_FREQ'
+  },
+  'chs': {
+    'result_limit': 50
   }
 };
 
