@@ -6,7 +6,7 @@
   </a>
 </h1>
 
-Search Chrome's bookmarks, download logs, and visit historys in Alfred 4
+Alfred workflow to search Chrome's queries, bookmarks, history and download logs
 
 ![](./imgs/demo.gif)
 

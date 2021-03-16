@@ -11,9 +11,9 @@ const { existsAsync, extractHostname, getHistoryDB } = require('./utils');
   const loweredInput = input ? input.normalize().toLowerCase() : '';
 
   const historyDB = getHistoryDB();
-  let historys = historyDB.prepare('SELECT url FROM urls').all();
+  const historys = historyDB.prepare('SELECT url FROM urls').all();
 
-  let querys = new Set();
+  const querys = new Set();
   for (const history of historys) {
     const urlParts = url.parse(history.url, true);
     const query = urlParts.query;
