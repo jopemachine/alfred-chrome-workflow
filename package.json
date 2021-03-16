@@ -12,7 +12,7 @@
     "node": ">=4"
   },
   "name": "alfred-chrome-workflow",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Alfred workflow to search Chrome's queries, bookmarks, history and download logs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -33,7 +33,7 @@
   "license": "MIT",
   "homepage": "https://github.com/jopemachine/alfred-chrome-workflow#readme",
   "dependencies": {
-    "alfy": "git+https://github.com/jopemachine/alfy",
+    "alfy": "^0.10.0",
     "better-sqlite3": "^7.1.2",
     "byte-size": "^7.0.1",
     "chrome-bookmark-reader": "^0.3.0",

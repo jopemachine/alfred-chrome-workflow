@@ -289,7 +289,7 @@
 	<key>createdby</key>
 	<string>jopemachine</string>
 	<key>description</key>
-	<string>Alfred workflow to search Chrome's bookmarks and history</string>
+	<string>Alfred workflow to search Chrome's queries, bookmarks, history and download logs</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
