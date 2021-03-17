@@ -75,14 +75,14 @@ function extractHostname(url) {
   return hostname;
 }
 
-const decideTargetHistory = (historys) => {
+const decideTargetHistory = (historys, resultLimit) => {
   let idx = 0;
   let deleted = 0;
   let prevTitle;
   const targetHistory = [];
 
   for (const historyItem of historys) {
-    if (idx >= conf.chh.result_limit) {
+    if (idx >= resultLimit) {
       break;
     }
     if (historyItem.title === prevTitle) {

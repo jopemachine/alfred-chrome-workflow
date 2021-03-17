@@ -15,7 +15,8 @@ const defaultConfig = {
     'sort': 'VISIT_FREQ'
   },
   'chs': {
-    'result_limit': 50
+    'result_limit': 50,
+    'delete_duplicate': true
   }
 };
 

@@ -44,7 +44,7 @@ const { FAVICON_DB } = require('./constant');
   const wholeLogLen = historys.length;
 
   if (conf.chh.delete_duplicate) {
-    const { targetHistory, deleted } = decideTargetHistory(historys);
+    const { targetHistory, deleted } = decideTargetHistory(historys, conf.chh.result_limit);
     historys = targetHistory;
     deletedItems = deleted;
   } else {
@@ -71,6 +71,11 @@ const { FAVICON_DB } = require('./constant');
         text: {
           copy: item.url,
           largetype: item.url,
+        },
+        mods: {
+          cmd: {
+            subtitle: 'Press Enter to copy this url to clipboard',
+          },
         },
       };
     })
