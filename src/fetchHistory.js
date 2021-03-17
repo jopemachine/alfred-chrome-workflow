@@ -19,6 +19,7 @@ const { FAVICON_DB } = require('./constant');
   input = handleInput(input);
   const domainQuery = input.domain !== '' ? input.domain : input.query;
   const titleQuery = input.query;
+  const isDomainSearch = input.isDomainSearch;
 
   const historyDB = getHistoryDB();
   getFaviconDB();
@@ -34,7 +35,7 @@ const { FAVICON_DB } = require('./constant');
                       (SELECT id FROM favicon_bitmaps
                           WHERE favicon_bitmaps.icon_id = icon_mapping.icon_id
                           ORDER BY width DESC LIMIT 1)
-          WHERE (urls.title LIKE '%${titleQuery}%' ${domainQuery !== titleQuery ? 'AND' : 'OR' } urls.url LIKE '%${domainQuery}%')
+          WHERE (urls.title LIKE '%${titleQuery}%' ${isDomainSearch ? 'AND' : 'OR' } urls.url LIKE '%${domainQuery}%')
           ORDER BY ${conf.chh.history_sort}
       `
     )
@@ -44,7 +45,10 @@ const { FAVICON_DB } = require('./constant');
   const wholeLogLen = historys.length;
 
   if (conf.chh.delete_duplicate) {
-    const { targetHistory, deleted } = decideTargetHistory(historys, conf.chh.result_limit);
+    const { targetHistory, deleted } = decideTargetHistory(
+      historys,
+      conf.chh.result_limit
+    );
     historys = targetHistory;
     deletedItems = deleted;
   } else {
@@ -62,13 +66,13 @@ const { FAVICON_DB } = require('./constant');
         (await fsPromise.writeFile(`cache/${hostname}.png`, item.image_data));
 
       return {
-        icon: {
-          path: `cache/${hostname}.png`,
-        },
         title: item.title,
         subtitle: getLocaleString(unixTimestamp, conf.locale),
         quicklookurl: item.url,
         arg: item.url,
+        icon: {
+          path: `cache/${hostname}.png`,
+        },
         text: {
           copy: item.url,
           largetype: item.url,

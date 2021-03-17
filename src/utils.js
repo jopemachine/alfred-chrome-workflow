@@ -8,11 +8,13 @@ const sqlite = require('better-sqlite3');
 const handleInput = (str) => {
   let query = '';
   let domain = '';
+  let isDomainSearch = false;
 
   if (str.includes('#')) {
     const words = str.split(' ');
     for (const word of words) {
       if (word.startsWith('#')) {
+        isDomainSearch = true;
         domain = word.substr(1, word.length - 1);
       } else {
         query += (query === '' ? word : ' ' + word);
@@ -25,6 +27,7 @@ const handleInput = (str) => {
   return {
     query,
     domain,
+    isDomainSearch
   };
 };
 
