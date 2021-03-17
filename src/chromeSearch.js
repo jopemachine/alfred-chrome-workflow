@@ -36,7 +36,7 @@ const {
         title: queryWord,
         subtitle: item.url,
         distance: input ? distance(loweredInput, queryWord) : 0,
-        quicklook: item.url,
+        quicklookurl: item.url,
         mods: {
           cmd: {
             subtitle: 'Press Enter to copy this url to clipboard',

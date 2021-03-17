@@ -67,6 +67,7 @@ const { FAVICON_DB } = require('./constant');
         },
         title: item.title,
         subtitle: getLocaleString(unixTimestamp, conf.locale),
+        quicklookurl: item.url,
         arg: item.url,
         text: {
           copy: item.url,

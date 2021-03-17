@@ -35,6 +35,7 @@ if (process.argv[3]) {
         title: item.name,
         subtitle: item.url,
         arg: item.url,
+        quicklookurl: item.url
       };
 
       (await existsAsync(`cache/${hostname}.png`)) &&
