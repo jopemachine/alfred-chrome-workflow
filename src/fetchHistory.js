@@ -34,7 +34,7 @@ const { FAVICON_DB } = require('./constant');
                       (SELECT id FROM favicon_bitmaps
                           WHERE favicon_bitmaps.icon_id = icon_mapping.icon_id
                           ORDER BY width DESC LIMIT 1)
-          WHERE (urls.title LIKE '%${titleQuery}%' ${domainQuery !== '' ? 'AND' : 'OR' } urls.url LIKE '%${domainQuery}%')
+          WHERE (urls.title LIKE '%${titleQuery}%' ${domainQuery !== titleQuery ? 'AND' : 'OR' } urls.url LIKE '%${domainQuery}%')
           ORDER BY ${conf.chh.history_sort}
       `
     )

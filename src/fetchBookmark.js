@@ -55,7 +55,7 @@ if (process.argv[3]) {
     for (const history of visitHistorys) {
       const key = history.url;
       if (freqs[key]) {
-        freqs[key] = freqs[key] + 1;
+        ++freqs[key];
       } else {
         freqs[key] = 1;
       }
