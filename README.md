@@ -7,9 +7,37 @@
   </a>
 </h1>
 
-Alfred workflow to search Chrome's queries, bookmarks, history and download logs
+Alfred workflow to search Chrome's queries, bookmarks, history and download logs, and other datas
 
 ![](./imgs/demo.gif)
+
+## 🌈 Features
+
+* 📄 *Search Chrome's Visit History `(chh)`*
+
+* 🔖 *Search Chrome's Bookmark sorted by visit counts `(chb)`*
+
+* 📁 *Search Chrome's Bookmark folder `(chf)`*
+
+* 🔎 *Search Chrome's Download logs `(chd)`*
+
+* 📜 *Search Chrome's Search query history `(chs)`*
+
+* 🎥 *Search Chrome's Media (video) history `(chm)`*
+
+* 📒 *Search and Copy Your Chrome's Autofill data `(cha)`*
+
+* 📝 *You can change your search config details `(ch > conf)`*
+
+## 📌 Prerequisite
+
+The prerequisites below are required to use that package.
+
+* Node JS
+
+* [Chrome](https://www.google.com/intl/en/chrome/)
+
+* [Alfred powerpack](https://www.alfredapp.com/powerpack/)
 
 ##  🔨 How to install
 
@@ -34,29 +62,6 @@ If chrome_profile is not proper, you will encounter below error.
 4. **(Optional, Recommended) You can cache favicon images in advance by executing `ch > cache`**
 
 By proceeding with the above process, you can assign favicon to the items of `chb` and increase search speed.
-
-## 📋 Features
-
-* *Search Chrome's Visit History `(chh)`*
-
-* *Search Chrome's Bookmark sorted by visit counts `(chb, chf)`*
-
-* *Search Chrome's Download logs `(chd)`*
-
-* *Search Chrome's Search query history `(chs)`*
-
-* *You can change your search config details `(ch > conf)`*
-
-## 📌 Prerequisite
-
-The prerequisites below are required to use that package.
-
-* Node JS
-
-* [Chrome](https://www.google.com/intl/en/chrome/)
-
-* [Alfred powerpack](https://www.alfredapp.com/powerpack/)
-
 
 ## 📗 How to use
 
@@ -104,6 +109,18 @@ Example:
 
 `chs #github [some_word_to_search]`
 
+### chm { Argument }
+
+Argument: {`Term to search`}
+
+Search chrome media history (like youtube watching history)
+
+### cha { Argument }
+
+Argument: {`Term to search`}
+
+Search chrome autofill data
+
 ### ch > conf
 
 Open config file (`conf.json`)
@@ -128,7 +145,7 @@ Type: `string (enum)`
 
 Determines whether to display some string values in Korean or English.
 
-Possible values: `ko-KR` or `en`
+Possible values: `ko` or `en`
 
 ### chh
 
@@ -176,13 +193,41 @@ Sort by `VISIT_FREQ` or `ALPHABET`
 
 Type: `number`
 
-Displays as many search results in `chh` search as `result_limit`.
+Displays as many search results in `chs` search as `result_limit`.
 
 * **delete_duplicate**
 
 Type: `boolean`
 
 Removes items with duplicate title names.
+
+### chm
+
+* **result_limit**
+
+Type: `number`
+
+Displays as many search results in `chm` search as `result_limit`.
+
+* **delete_duplicate**
+
+Type: `boolean`
+
+Removes items with duplicate title names.
+
+### cha
+
+* **result_limit**
+
+Type: `number`
+
+Displays as many search results in `cha` search as `result_limit`.
+
+* **delete_duplicate**
+
+Type: `boolean`
+
+Removes items with duplicate values.
 
 ## License
 

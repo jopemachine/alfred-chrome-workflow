@@ -17,6 +17,14 @@ const defaultConfig = {
   'chs': {
     'result_limit': 50,
     'delete_duplicate': true
+  },
+  'chm': {
+    'result_limit': 50,
+    'delete_duplicate': true
+  },
+  'cha': {
+    'result_limit': 50,
+    'delete_duplicate': true
   }
 };
 

@@ -2,10 +2,15 @@ const userName = require('os').userInfo().username;
 const conf = require('../conf.json');
 const sqliteOptions = { readonly: true, fileMustExist: true };
 const fs = require('fs');
-const { HISTORY_DB, FAVICON_DB } = require('./constant');
 const sqlite = require('better-sqlite3');
 const _ = require('lodash');
 const path = require('path');
+const {
+  HISTORY_DB,
+  FAVICON_DB,
+  MEDIA_HISTORY_DB,
+  WEB_DATA_DB,
+} = require('./constant');
 
 const getExecPath = () => {
   return (__dirname.split(path.sep).slice(0, -1)).join(path.sep);
@@ -57,6 +62,18 @@ function getFaviconDB () {
   const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Favicons`;
   fs.copyFileSync(targetPath, FAVICON_DB);
   return sqlite(FAVICON_DB, sqliteOptions);
+}
+
+function getMediaHistoryDB () {
+  const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Media History`;
+  fs.copyFileSync(targetPath, MEDIA_HISTORY_DB);
+  return sqlite(MEDIA_HISTORY_DB, sqliteOptions);
+}
+
+function getWebDataDB () {
+  const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Web Data`;
+  fs.copyFileSync(targetPath, WEB_DATA_DB);
+  return sqlite(WEB_DATA_DB, sqliteOptions);
 }
 
 function replaceAll (string, search, replace) {
@@ -146,7 +163,7 @@ const getLocaleString = (datetime, locale) => {
       : dateObj.getSeconds();
 
   switch (locale) {
-  case 'ko-KR': {
+  case 'ko': {
     const koDayOfTheWeek = [
       '일요일',
       '월요일',
@@ -202,8 +219,10 @@ module.exports = {
   convertChromeTimeToUnixTimestamp,
   extractHostname,
   decideTargetHistory,
+  getWebDataDB,
   getHistoryDB,
   getFaviconDB,
+  getMediaHistoryDB,
   getLocaleString,
   replaceAll,
 };
