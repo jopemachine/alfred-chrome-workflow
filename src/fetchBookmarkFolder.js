@@ -15,10 +15,9 @@ const { addVariable } = require('./argHandler');
   if (input) {
     bookmarks = bookmarks.filter((item) => {
       const name = item.name.toLowerCase();
-      const url = item.url.toLowerCase();
       const loweredInput = input.normalize().toLowerCase();
 
-      if (name.includes(loweredInput) || url.includes(loweredInput)) {
+      if (name.includes(loweredInput)) {
         return true;
       }
       return false;
