@@ -2,20 +2,33 @@ const getChromeBookmark = require('chrome-bookmark-reader').getChromeBookmark;
 const alfy = require('alfy');
 const psl = require('psl');
 const userName = require('os').userInfo().username;
-const { extractHostname, existsAsync, getHistoryDB } = require('./utils');
 const conf = require('../conf.json');
 const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Bookmarks`;
-
-const options = {};
-if (process.argv[3]) {
-  options[process.argv[3].split('--')[1]] = true;
-}
+const { parseArgv } = require('./argHandler');
+const {
+  extractHostname,
+  existsAsync,
+  getHistoryDB,
+  bookmarkDFS,
+  getExecPath,
+} = require('./utils');
 
 (async function () {
-  let bookmarks = getChromeBookmark(targetPath);
-  const input = alfy.input ? alfy.input.normalize() : null;
+  const { options, input } = parseArgv(process.argv);
 
-  if (input) {
+  let bookmarks = getChromeBookmark(targetPath, {
+    shouldIncludeFolders: options['folderId'] ? true : false,
+  });
+
+  if (options['folderId']) {
+    bookmarks = bookmarkDFS(
+      bookmarks.filter((item) => {
+        return item.id == options['folderId'];
+      })[0]
+    );
+  }
+
+  if (input !== '') {
     bookmarks = bookmarks.filter((item) => {
       const name = item.name.toLowerCase();
       const url = item.url.toLowerCase();
@@ -89,6 +102,16 @@ if (process.argv[3]) {
     result.splice(0, 0, {
       valid: true,
       title: `${result.length} bookmarks were found.`,
+    });
+  }
+
+  if (options['folderId']) {
+    result.splice(0, 0, {
+      title: 'Back',
+      arg: 'back',
+      icon: {
+        path: `${getExecPath()}/assets/back-button.png`
+      }
     });
   }
 

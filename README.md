@@ -39,7 +39,7 @@ By proceeding with the above process, you can assign favicon to the items of `ch
 
 * *Search Chrome's Visit History `(chh)`*
 
-* *Search Chrome's Bookmark sorted by visit counts `(chb)`*
+* *Search Chrome's Bookmark sorted by visit counts `(chb, chf)`*
 
 * *Search Chrome's Download logs `(chd)`*
 
@@ -67,6 +67,12 @@ Argument: {`Term to search`}
 Search chrome bookmark
 
 (Could be sorted by `visit counts`, `alphabet`)
+
+### chf { Argument }
+
+Argument: {`Term to search`}
+
+Search chrome bookmark folders
 
 ### chh { Argument }
 

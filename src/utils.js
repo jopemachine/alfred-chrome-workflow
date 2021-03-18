@@ -4,6 +4,22 @@ const sqliteOptions = { readonly: true, fileMustExist: true };
 const fs = require('fs');
 const { HISTORY_DB, FAVICON_DB } = require('./constant');
 const sqlite = require('better-sqlite3');
+const _ = require('lodash');
+const path = require('path');
+
+const getExecPath = () => {
+  return (__dirname.split(path.sep).slice(0, -1)).join(path.sep);
+};
+
+const bookmarkDFS = (item) => {
+  if (item.type === 'folder') {
+    return item.children.reduce((res, child) => {
+      return [...res, ..._.flatten(bookmarkDFS(child))];
+    }, []);
+  } else {
+    return [item];
+  }
+};
 
 const handleInput = (str) => {
   let query = '';
@@ -179,6 +195,8 @@ const getLocaleString = (datetime, locale) => {
 };
 
 module.exports = {
+  getExecPath,
+  bookmarkDFS,
   handleInput,
   existsAsync,
   convertChromeTimeToUnixTimestamp,

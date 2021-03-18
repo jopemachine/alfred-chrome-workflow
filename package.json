@@ -12,7 +12,7 @@
     "node": ">=4"
   },
   "name": "alfred-chrome-workflow",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Alfred workflow to search Chrome's queries, bookmarks, history and download logs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -39,13 +39,14 @@
     "alfy": "^0.10.0",
     "better-sqlite3": "^7.1.2",
     "byte-size": "^7.0.1",
-    "chrome-bookmark-reader": "^0.3.0",
+    "chrome-bookmark-reader": "^0.4.0",
     "fastest-levenshtein": "^1.0.12",
     "lodash": "^4.17.21",
     "open": "^8.0.2",
     "psl": "^1.8.0"
   },
   "files": [
+    "assets/*.png",
     "info.plist",
     "src/*.js",
     "icon.png",

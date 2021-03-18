@@ -17,9 +17,9 @@ const { FAVICON_DB } = require('./constant');
 (async function() {
   let input = alfy.input ? alfy.input.normalize() : '';
   input = handleInput(input);
-  const domainQuery = input.domain !== '' ? input.domain : input.query;
-  const titleQuery = input.query;
   const isDomainSearch = input.isDomainSearch;
+  const domainQuery = isDomainSearch ? input.domain : input.query;
+  const titleQuery = input.query;
 
   const historyDB = getHistoryDB();
   getFaviconDB();
