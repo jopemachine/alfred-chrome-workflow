@@ -80,7 +80,7 @@ Argument: {`Term to search`}
 
 Search chrome visit history
 
-You can append `#` to search word to search `urls` only.
+You can append `#` to search word to search only the logs in that `url`.
 
 Example:
 
@@ -97,6 +97,12 @@ Search chrome download history
 Argument: {`Term to search`}
 
 Search your query based on visit history
+
+You can append `#` to search word to search only the logs in that `url`.
+
+Example:
+
+`chs #github [some_word_to_search]`
 
 ### ch > conf
 

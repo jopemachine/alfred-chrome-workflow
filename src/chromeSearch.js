@@ -4,6 +4,7 @@ const psl = require('psl');
 const conf = require('../conf.json');
 const { distance } = require('fastest-levenshtein');
 const {
+  handleInput,
   decideTargetHistory,
   existsAsync,
   extractHostname,
@@ -11,8 +12,11 @@ const {
 } = require('./utils');
 
 (async function () {
-  const input = alfy.input ? alfy.input.normalize() : null;
-  const loweredInput = input ? input.normalize().toLowerCase() : '';
+  let input = alfy.input ? alfy.input.normalize() : '';
+  input = handleInput(input);
+  const isDomainSearch = input.isDomainSearch;
+  const domainQuery = isDomainSearch ? input.domain : input.query;
+  const titleQuery = input.query;
 
   const historyDB = getHistoryDB();
   const historys = historyDB
@@ -21,7 +25,8 @@ const {
       SELECT urls.url, keyword_search_terms.term 
           FROM keyword_search_terms
           JOIN urls ON urls.id = keyword_search_terms.url_id
-          WHERE keyword_search_terms.term LIKE '%${loweredInput}%'
+          ${isDomainSearch ? `WHERE urls.url LIKE '%${domainQuery}%' AND keyword_search_terms.term LIKE '%${titleQuery}%'` :
+    `WHERE keyword_search_terms.term LIKE '%${titleQuery}%'`}
           ORDER BY last_visit_time DESC
       `
     )
@@ -35,7 +40,7 @@ const {
       const ret = {
         title: queryWord,
         subtitle: item.url,
-        distance: input ? distance(loweredInput, queryWord) : 0,
+        distance: input ? distance(titleQuery, queryWord) : 0,
         quicklookurl: item.url,
         mods: {
           cmd: {
