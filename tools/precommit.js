@@ -3,7 +3,7 @@ const fs = require('fs');
 const defaultConfig = {
   'locale': 'en',
   'chrome_profile': 'Default',
-  'exclude': [
+  'exclude_domains': [
   ],
   'chh': {
     'result_limit': 50,
