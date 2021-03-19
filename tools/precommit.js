@@ -3,20 +3,12 @@ const fs = require('fs');
 const defaultConfig = {
   'locale': 'en',
   'chrome_profile': 'Default',
+  'exclude': [
+  ],
   'chh': {
     'result_limit': 50,
     'delete_duplicate': true,
-    'history_sort': 'last_visit_time DESC'
-  },
-  'chd': {
-    'sort': 'DESC'
-  },
-  'chb': {
-    'sort': 'VISIT_FREQ'
-  },
-  'chs': {
-    'result_limit': 50,
-    'delete_duplicate': true
+    'sort': 'last_visit_time DESC'
   },
   'chm': {
     'result_limit': 50,
@@ -27,7 +19,17 @@ const defaultConfig = {
     'result_limit': 50,
     'delete_duplicate': true,
     'sort': 'count'
-  }
+  },
+  'chs': {
+    'result_limit': 50,
+    'delete_duplicate': true
+  },
+  'chd': {
+    'sort': 'DESC'
+  },
+  'chb': {
+    'sort': 'VISIT_FREQ'
+  },
 };
 
 fs.writeFileSync(

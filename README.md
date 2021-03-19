@@ -157,6 +157,14 @@ Determines whether to display some string values in Korean or English.
 
 Possible values: `ko` or `en`
 
+* **exclude_domains**
+
+Type: `string[]`
+
+You can exclude specific domain's url in your search result. 
+
+This is applied to `chs`, `chh`, `chm`. (Not `chb`)
+
 ### chh
 
 * **result_limit**
@@ -165,7 +173,7 @@ Type: `number`
 
 Displays as many search results in `chh` search as `result_limit`.
 
-* **history_sort**
+* **sort**
 
 Type: `string`
 

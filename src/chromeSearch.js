@@ -9,6 +9,7 @@ const {
   existsAsync,
   extractHostname,
   getHistoryDB,
+  filterExcludeDomain,
 } = require('./utils');
 
 (async function () {
@@ -38,6 +39,7 @@ const {
       const queryWord = item.term;
       const hostname = psl.get(extractHostname(item.url));
       const ret = {
+        hostname,
         title: queryWord,
         subtitle: item.url,
         distance: input ? distance(titleQuery, queryWord) : 0,
@@ -78,6 +80,8 @@ const {
   } else {
     result = historys.slice(0, conf.chs.result_limit);
   }
+
+  result = filterExcludeDomain(result);
 
   result.splice(0, 0, {
     valid: true,

@@ -8,6 +8,7 @@ const {
   handleInput,
   existsAsync,
   decideTargetHistory,
+  filterExcludeDomain,
 } = require('./utils');
 const humanizeDuration = require('humanize-duration');
 
@@ -48,7 +49,7 @@ const humanizeDuration = require('humanize-duration');
     historys = historys.slice(0, conf.chm.result_limit);
   }
 
-  const result = await Promise.all(
+  let result = await Promise.all(
     historys.map(async (item) => {
       // * source_title is domain name
       // const hostname = psl.get(extractHostname(item.url));
@@ -63,6 +64,7 @@ const humanizeDuration = require('humanize-duration');
         (await fsPromise.writeFile(`cache/${hostname}.png`, item.image_data));
 
       return {
+        hostname,
         title: item.title,
         subtitle: artist ? `Artist: ${artist}, Play time: ${playTime}` : `Play time: ${playTime}`,
         quicklookurl: item.url,
@@ -82,6 +84,8 @@ const humanizeDuration = require('humanize-duration');
       };
     })
   );
+
+  result = filterExcludeDomain(result);
 
   if (result.length === 0) {
     result.push({

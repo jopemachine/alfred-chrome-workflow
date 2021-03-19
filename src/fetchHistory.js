@@ -4,6 +4,7 @@ const psl = require('psl');
 const conf = require('../conf.json');
 const { getLocaleString } = require('./utils');
 const {
+  filterExcludeDomain,
   handleInput,
   existsAsync,
   extractHostname,
@@ -36,7 +37,7 @@ const { FAVICON_DB } = require('./constant');
                           WHERE favicon_bitmaps.icon_id = icon_mapping.icon_id
                           ORDER BY width DESC LIMIT 1)
           WHERE (urls.title LIKE '%${titleQuery}%' ${isDomainSearch ? 'AND' : 'OR' } urls.url LIKE '%${domainQuery}%')
-          ORDER BY ${conf.chh.history_sort}
+          ORDER BY ${conf.chh.sort}
       `
     )
     .all();
@@ -55,7 +56,7 @@ const { FAVICON_DB } = require('./constant');
     historys = historys.slice(0, conf.chh.result_limit);
   }
 
-  const result = await Promise.all(
+  let result = await Promise.all(
     historys.map(async (item) => {
       const unixTimestamp = convertChromeTimeToUnixTimestamp(
         item.last_visit_time
@@ -66,6 +67,7 @@ const { FAVICON_DB } = require('./constant');
         (await fsPromise.writeFile(`cache/${hostname}.png`, item.image_data));
 
       return {
+        hostname,
         title: item.title,
         subtitle: getLocaleString(unixTimestamp, conf.locale),
         quicklookurl: item.url,
@@ -85,6 +87,8 @@ const { FAVICON_DB } = require('./constant');
       };
     })
   );
+
+  result = filterExcludeDomain(result);
 
   if (result.length === 0) {
     result.push({

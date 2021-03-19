@@ -13,6 +13,12 @@ const {
   LOGIN_DATA_DB,
 } = require('./constant');
 
+const filterExcludeDomain = (datas) => {
+  return datas.filter(item => {
+    return !conf.exclude_domains.includes(item.hostname);
+  });
+};
+
 const getExecPath = () => {
   return (__dirname.split(path.sep).slice(0, -1)).join(path.sep);
 };
@@ -223,6 +229,7 @@ const getLocaleString = (datetime, locale) => {
 };
 
 module.exports = {
+  filterExcludeDomain,
   getExecPath,
   bookmarkDFS,
   handleInput,
