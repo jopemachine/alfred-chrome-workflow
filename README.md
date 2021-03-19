@@ -9,23 +9,39 @@
 
 Alfred workflow to search Chrome's queries, bookmarks, history and download logs, and other datas
 
-![](./imgs/demo.gif)
+![](./imgs/demo.mp4)
 
 ## 🌈 Features
 
 * 📄 *Search Chrome's Visit History `(chh)`*
 
+![](./imgs/chh.png)
+
+![](./imgs/chh_s.png)
+
 * 🔖 *Search Chrome's Bookmark sorted by visit counts `(chb)`*
+
+![](./imgs/chb.png)
 
 * 📁 *Search Chrome's Bookmark folder `(chf)`*
 
-* 🔎 *Search Chrome's Download logs `(chd)`*
+![](./imgs/chf.png)
 
 * 📜 *Search Chrome's Search query history `(chs)`*
 
+![](./imgs/chs.png)
+
+* 🔎 *Search Chrome's Download logs `(chd)`*
+
+![](./imgs/chd.png)
+
 * 🎥 *Search Chrome's Media (video) history `(chm)`*
 
+![](./imgs/chm.png)
+
 * 📒 *Search and Copy Your Chrome's Autofill data `(cha)`*
+
+![](./imgs/cha.png)
 
 * 📝 *You can change your search config details `(ch > conf)`*
 
