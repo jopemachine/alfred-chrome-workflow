@@ -20,11 +20,13 @@ const defaultConfig = {
   },
   'chm': {
     'result_limit': 50,
-    'delete_duplicate': true
+    'delete_duplicate': true,
+    'sort': 'last_updated_time_s'
   },
   'cha': {
     'result_limit': 50,
-    'delete_duplicate': true
+    'delete_duplicate': true,
+    'sort': 'count'
   }
 };
 

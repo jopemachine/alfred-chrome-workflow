@@ -1,6 +1,9 @@
 const alfy = require('alfy');
 const conf = require('../conf.json');
-const { getWebDataDB } = require('./utils');
+const {
+  getWebDataDB,
+  getLocaleString,
+} = require('./utils');
 const _ = require('lodash');
 
 (async function() {
@@ -13,7 +16,7 @@ const _ = require('lodash');
       SELECT value, name, date_created, count
         FROM autofill
         WHERE value LIKE '%${input}%' OR name LIKE '%${input}%'
-        ORDER BY value DESC
+        ORDER BY ${conf.cha.sort} DESC
       `
     )
     .all();
@@ -26,9 +29,10 @@ const _ = require('lodash');
 
   const result = await Promise.all(
     autofillDatas.map(async (item) => {
+      const createdDate = getLocaleString((item.date_created * 1000), conf.locale);
       return {
         title: item.value,
-        subtitle: `Name: [${item.name}]`,
+        subtitle: `Group: "${item.name}", Created Date: ${createdDate}`,
         arg: item.value,
         icon: {
           path: 'assets/info.png',

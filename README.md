@@ -53,7 +53,7 @@ Please refer [these installaion issues](https://github.com/jopemachine/alfred-ch
 
 2. **Check your `chrome_profile` on `/Users/<username>/Library/Application Support/Google/Chrome/<chrome_profile>/`. default value is set by `Default`.**
 
-If chrome_profile is not proper, you will encounter below error.
+If `chrome_profile` is not proper, you could encounter below error.
 
 ![](./imgs/profile_name_error.png)
 
@@ -203,6 +203,18 @@ Removes items with duplicate title names.
 
 ### chm
 
+* **sort**
+
+Type: `string (enum)`
+
+Sort item.
+
+Possible Value: `artist`, `source_title`, `position_ms`, `last_updated_time_s`
+
+`position_ms` sorts by watching time you played on the video.
+
+`last_updated_time_s` sorts by recently viewed videos descending.
+
 * **result_limit**
 
 Type: `number`
@@ -216,6 +228,24 @@ Type: `boolean`
 Removes items with duplicate title names.
 
 ### cha
+
+* **sort**
+
+Type: `string (enum)`
+
+Sort item.
+
+Possible Value: `name`, `value`, `count`, `date_created`, `date_last_used`
+
+`name` sorts by the form's name.
+
+`value` sorts by the autofill data value.
+
+`count` sorts by the numbers of the data is used.
+
+`date_created` sorts by the dates of the data is created.
+
+`date_last_used` sorts by the dates of the data is used last.
 
 * **result_limit**
 

@@ -29,7 +29,7 @@ const humanizeDuration = require('humanize-duration');
     ? `WHERE url LIKE '%${domainQuery}%' AND (title LIKE '%${titleQuery}%' OR artist LIKE '%${titleQuery}%')`
     : `WHERE title LIKE '%${titleQuery}%' OR artist LIKE '%${titleQuery}%'`
   }
-        ORDER BY position_ms DESC
+        ORDER BY ${conf.chm.sort} DESC
       `
     )
     .all();
@@ -52,6 +52,9 @@ const humanizeDuration = require('humanize-duration');
     historys.map(async (item) => {
       // * source_title is domain name
       // const hostname = psl.get(extractHostname(item.url));
+
+      // * not valid!
+      // const viewTime = getLocaleString(convertChromeTimeToUnixTimestamp(item.last_updated_time_s), conf.locale);
       const hostname = item.source_title;
       const playTime = humanizeDuration(item.position_ms, { language: conf.locale });
       const artist = item.artist;
