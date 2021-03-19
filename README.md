@@ -121,6 +121,12 @@ Argument: {`Term to search`}
 
 Search chrome autofill data
 
+### chid { Argument }
+
+Argument: {`Term to search`}
+
+Search chrome's login data (including email)
+
 ### ch > conf
 
 Open config file (`conf.json`)
@@ -128,6 +134,10 @@ Open config file (`conf.json`)
 ### ch > cache
 
 Cache favicon images from your visit history in advance
+
+### ch > clearcache
+
+Clear favicon cache
 
 ## 🔖 Search Options
 

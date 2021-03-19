@@ -10,6 +10,7 @@ const {
   FAVICON_DB,
   MEDIA_HISTORY_DB,
   WEB_DATA_DB,
+  LOGIN_DATA_DB,
 } = require('./constant');
 
 const getExecPath = () => {
@@ -52,28 +53,38 @@ const handleInput = (str) => {
   };
 };
 
+const getDBFilePath = (DBFile) => {
+  return `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/${DBFile}`;
+};
+
 function getHistoryDB () {
-  const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/History`;
+  const targetPath = getDBFilePath('History');
   fs.copyFileSync(targetPath, HISTORY_DB);
   return sqlite(HISTORY_DB, sqliteOptions);
 }
 
 function getFaviconDB () {
-  const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Favicons`;
+  const targetPath = getDBFilePath('Favicons');
   fs.copyFileSync(targetPath, FAVICON_DB);
   return sqlite(FAVICON_DB, sqliteOptions);
 }
 
 function getMediaHistoryDB () {
-  const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Media History`;
+  const targetPath = getDBFilePath('Media History');
   fs.copyFileSync(targetPath, MEDIA_HISTORY_DB);
   return sqlite(MEDIA_HISTORY_DB, sqliteOptions);
 }
 
 function getWebDataDB () {
-  const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Web Data`;
+  const targetPath = getDBFilePath('Web Data');
   fs.copyFileSync(targetPath, WEB_DATA_DB);
   return sqlite(WEB_DATA_DB, sqliteOptions);
+}
+
+function getLoginDataDB () {
+  const targetPath = getDBFilePath('Login Data');
+  fs.copyFileSync(targetPath, LOGIN_DATA_DB);
+  return sqlite(LOGIN_DATA_DB, sqliteOptions);
 }
 
 function replaceAll (string, search, replace) {
@@ -219,6 +230,7 @@ module.exports = {
   convertChromeTimeToUnixTimestamp,
   extractHostname,
   decideTargetHistory,
+  getLoginDataDB,
   getWebDataDB,
   getHistoryDB,
   getFaviconDB,
