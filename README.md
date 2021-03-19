@@ -9,8 +9,6 @@
 
 Alfred workflow to search Chrome's queries, bookmarks, history and download logs, and other datas
 
-![](./imgs/demo.mp4)
-
 ## 🌈 Features
 
 * 📄 *Search Chrome's Visit History `(chh)`*
