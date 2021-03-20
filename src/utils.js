@@ -36,17 +36,22 @@ const bookmarkDFS = (item) => {
 const handleInput = (str) => {
   let query = '';
   let domain = '';
+  let artist = '';
   let isDomainSearch = false;
+  let isArtistSearch = false;
 
-  if (str.includes('#')) {
+  if (str.includes('#') || str.includes('@')) {
     const words = str.split(' ');
     for (const word of words) {
       if (word.startsWith('#')) {
         isDomainSearch = true;
         domain = word.substr(1, word.length - 1);
+      } else if (word.startsWith('@')) {
+        isArtistSearch = true;
+        artist = word.substr(1, word.length - 1);
       } else {
         query += (query === '' ? word : ' ' + word);
-      }
+      } 
     }
   } else {
     query = str;
@@ -55,6 +60,8 @@ const handleInput = (str) => {
   return {
     query,
     domain,
+    artist,
+    isArtistSearch,
     isDomainSearch
   };
 };

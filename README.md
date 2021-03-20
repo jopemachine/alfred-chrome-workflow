@@ -129,6 +129,14 @@ Argument: {`Term to search`}
 
 Search chrome media history (like youtube watching history)
 
+You can append `#` to search word to search only the logs in that `url`.
+
+And you can append `@` to search word to search only the logs in that `artist`.
+
+Example:
+
+`chs #youtube @some_artist [some_word_to_search]`
+
 ### cha { Argument }
 
 Argument: {`Term to search`}

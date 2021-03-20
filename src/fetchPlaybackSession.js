@@ -11,13 +11,29 @@ const {
   filterExcludeDomain,
 } = require('./utils');
 const humanizeDuration = require('humanize-duration');
+const _ = require('lodash');
 
 (async function() {
   let input = alfy.input ? alfy.input.normalize() : '';
   input = handleInput(input);
   const isDomainSearch = input.isDomainSearch;
+  const isArtistSearch = input.isArtistSearch;
   const domainQuery = isDomainSearch ? input.domain : input.query;
+  const artistQuery = isArtistSearch ? input.artist : input.query;
   const titleQuery = input.query;
+
+  let whereStmt = '';
+
+  _.cond([
+    [() => isDomainSearch && isArtistSearch ,
+      () => { whereStmt = `WHERE url LIKE '%${domainQuery}%' AND title LIKE '%${titleQuery}%' AND artist LIKE '%${artistQuery}%'`;}],
+    [() => isDomainSearch && !isArtistSearch,
+      () => { whereStmt = `WHERE url LIKE '%${domainQuery}%' AND (title LIKE '%${titleQuery}%' OR artist LIKE '%${artistQuery}%')`;}],
+    [() => !isDomainSearch && isArtistSearch,
+      () => { whereStmt = `WHERE (url LIKE '%${domainQuery}%' OR title LIKE '%${titleQuery}%') AND artist LIKE '%${artistQuery}%'`;}],
+    [() => !isDomainSearch && !isArtistSearch,
+      () => { whereStmt = `WHERE url LIKE '%${domainQuery}%' OR title LIKE '%${titleQuery}%' OR artist LIKE '%${artistQuery}%'`;}]
+  ]) ();
 
   const mediaHistoryDB = getMediaHistoryDB();
   let historys = mediaHistoryDB
@@ -25,11 +41,7 @@ const humanizeDuration = require('humanize-duration');
       `
       SELECT position_ms, url, title, artist, source_title
         FROM playbackSession
-        ${
-  isDomainSearch
-    ? `WHERE url LIKE '%${domainQuery}%' AND (title LIKE '%${titleQuery}%' OR artist LIKE '%${titleQuery}%')`
-    : `WHERE title LIKE '%${titleQuery}%' OR artist LIKE '%${titleQuery}%'`
-  }
+        ${whereStmt}
         ORDER BY ${conf.chm.sort} DESC
       `
     )

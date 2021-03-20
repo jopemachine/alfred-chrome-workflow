@@ -12,8 +12,8 @@
     "node": ">=4"
   },
   "name": "alfred-chrome-workflow",
-  "version": "0.2.1",
-  "description": "Alfred workflow to search Chrome's queries, bookmarks, history and download logs, and other datas",
+  "version": "0.2.2",
+  "description": "Chrome workflow for Alfred 4",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "alfy-init",
@@ -29,7 +29,9 @@
     "alfred-workflow",
     "alfred",
     "alfy",
+    "sqlite",
     "chrome",
+    "chrome-search",
     "chrome-download-log",
     "chrome-autofill-data",
     "chrome-media-history",
