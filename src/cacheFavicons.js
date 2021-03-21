@@ -37,5 +37,6 @@ const { FAVICON_DB } = require('./constant');
     })
   );
 
+  // To receive message
   console.log('');
 }) ();

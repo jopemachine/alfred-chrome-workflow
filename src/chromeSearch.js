@@ -9,6 +9,8 @@ const {
   extractHostname,
   getHistoryDB,
   filterExcludeDomain,
+  getLocaleString,
+  convertChromeTimeToUnixTimestamp,
 } = require('./utils');
 
 (async function () {
@@ -22,7 +24,7 @@ const {
   const historys = historyDB
     .prepare(
       `
-      SELECT urls.url, keyword_search_terms.term 
+      SELECT urls.url, urls.last_visit_time, keyword_search_terms.term
           FROM keyword_search_terms
           JOIN urls ON urls.id = keyword_search_terms.url_id
           ${isDomainSearch ? `WHERE urls.url LIKE '%${domainQuery}%' AND keyword_search_terms.term LIKE '%${titleQuery}%'` :
@@ -37,10 +39,14 @@ const {
     _.map(historys, async (item) => {
       const queryWord = item.term;
       const hostname = psl.get(extractHostname(item.url));
+      const unixTimestamp = convertChromeTimeToUnixTimestamp(
+        item.last_visit_time
+      );
+
       const ret = {
         hostname,
         title: queryWord,
-        subtitle: item.url,
+        subtitle: `From '${hostname}', In '${getLocaleString(unixTimestamp, conf.locale)}'`,
         quicklookurl: item.url,
         mods: {
           cmd: {
@@ -85,12 +91,15 @@ const {
     }`,
     variables: {
       type: 'query',
-      query: input
+      query: titleQuery
     },
     mods: {
       cmd: {
         subtitle: `Press Enter to copy this https://www.google.com/search?q=${input} to clipboard`,
       },
+      ctrl: {
+        subtitle: `Press Enter to search "${titleQuery}" on Google`
+      }
     },
   });
 

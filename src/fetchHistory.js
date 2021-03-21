@@ -107,7 +107,7 @@ const { FAVICON_DB } = require('./constant');
       title: `${wholeLogLen} logs were found.`,
       subtitle: `${result.length} shows up ${
         deletedItems ? `(${deletedItems} deleted due to duplication)` : ''
-      }`,
+      }`
     });
   }
 

@@ -1,4 +1,5 @@
 const alfy = require('alfy');
+const _ = require('lodash');
 const { getChromeBookmark, getExecPath, bookmarkDFS } = require('./utils');
 const { addVariable } = require('./argHandler');
 
@@ -20,7 +21,7 @@ const { addVariable } = require('./argHandler');
     });
   }
 
-  const result = bookmarks.map((item) => {
+  let result = bookmarks.map((item) => {
     const len = item.children
       ? item.children.filter((item) => item.type === 'url').length
       : 0;
@@ -39,9 +40,8 @@ const { addVariable } = require('./argHandler');
 
     return ret;
   });
-  
 
-  result.sort((a, b) => (a.title > b.title ? 1 : -1));
+  result = _.sortBy(result, ['title']);
 
   if (result.length === 0) {
     result.push({

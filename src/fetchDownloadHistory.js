@@ -10,6 +10,7 @@ const {
   convertChromeTimeToUnixTimestamp,
   getLocaleString,
 } = require('./utils');
+const userName = require('os').userInfo().username;
 
 (async function() {
   let downloadInfos = getHistoryDB()
@@ -50,11 +51,8 @@ const {
         arg: item.current_path,
         quicklookurl: item.current_path,
         mods: {
-          cmd: {
-            subtitle: 'Press enter to delete this file',
-          },
           shift: {
-            subtitle: `${fileSize.value}${fileSize.unit}`,
+            subtitle: `File size: ${fileSize.value}${fileSize.unit}`,
           },
         },
       };
@@ -83,6 +81,7 @@ const {
     result.splice(0, 0, {
       valid: true,
       title: `${result.length} download logs were found.`,
+      arg: `/Users/${userName}/Downloads/`
     });
   }
 
