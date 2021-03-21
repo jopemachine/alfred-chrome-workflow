@@ -5,6 +5,7 @@ const fs = require('fs');
 const sqlite = require('better-sqlite3');
 const _ = require('lodash');
 const path = require('path');
+const fsPromise = require('fs').promises;
 const {
   HISTORY_DB,
   FAVICON_DB,
@@ -23,13 +24,28 @@ const getExecPath = () => {
   return (__dirname.split(path.sep).slice(0, -1)).join(path.sep);
 };
 
-const bookmarkDFS = (item) => {
-  if (item.type === 'folder') {
-    return item.children.reduce((res, child) => {
-      return [...res, ..._.flatten(bookmarkDFS(child))];
-    }, []);
+const bookmarkDFS = (item, options = { targets: ['url'], depth: 99 }) => {
+  if (options.depth <= -1) {
+    return [];
+  }
+
+  if (item.type === 'url') {
+    if (!options.targets || options.targets.includes('url')) {
+      return [item];
+    } else {
+      return [];
+    }
   } else {
-    return [item];
+    // 'folder' or 'root'
+    const target = item.type === 'folder' ? item.children : item;
+    const initialArr = options.targets.includes('folder') ? [item] : [];
+
+    return _.reduce(target, (res, child) => {
+      return [
+        ...res,
+        ..._.flatten(bookmarkDFS(child, { targets: options.targets, depth: options.depth - 1 })),
+      ];
+    }, initialArr);
   }
 };
 
@@ -69,6 +85,17 @@ const handleInput = (str) => {
 const getDBFilePath = (DBFile) => {
   return `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/${DBFile}`;
 };
+
+async function getChromeBookmark() {
+  const bookmarksPath = getDBFilePath('Bookmarks');
+  const roots = JSON.parse(
+    await fsPromise.readFile(bookmarksPath, {
+      encoding: 'utf8',
+    })
+  ).roots;
+
+  return roots;
+}
 
 function getHistoryDB () {
   const targetPath = getDBFilePath('History');
@@ -236,6 +263,7 @@ const getLocaleString = (datetime, locale) => {
 };
 
 module.exports = {
+  getChromeBookmark,
   filterExcludeDomain,
   getExecPath,
   bookmarkDFS,

@@ -12,7 +12,7 @@
     "node": ">=4"
   },
   "name": "alfred-chrome-workflow",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "description": "Chrome workflow for Alfred 4",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -44,8 +44,6 @@
     "alfy": "^0.10.0",
     "better-sqlite3": "^7.1.2",
     "byte-size": "^7.0.1",
-    "chrome-bookmark-reader": "^0.4.0",
-    "fastest-levenshtein": "^1.0.12",
     "humanize-duration": "^3.25.1",
     "lodash": "^4.17.21",
     "open": "^8.0.2",

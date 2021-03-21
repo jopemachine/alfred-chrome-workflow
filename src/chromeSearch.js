@@ -2,7 +2,6 @@ const _ = require('lodash');
 const alfy = require('alfy');
 const psl = require('psl');
 const conf = require('../conf.json');
-const { distance } = require('fastest-levenshtein');
 const {
   handleInput,
   decideTargetHistory,
@@ -42,7 +41,6 @@ const {
         hostname,
         title: queryWord,
         subtitle: item.url,
-        distance: input ? distance(titleQuery, queryWord) : 0,
         quicklookurl: item.url,
         mods: {
           cmd: {
@@ -67,10 +65,6 @@ const {
       return ret;
     })
   );
-
-  result.sort((a, b) => {
-    return a.distance - b.distance;
-  });
 
   let deletedItems;
   if (conf.chh.delete_duplicate) {

@@ -48,6 +48,7 @@ const {
         title: fileFileName,
         subtitle,
         arg: item.current_path,
+        quicklookurl: item.current_path,
         mods: {
           cmd: {
             subtitle: 'Press enter to delete this file',

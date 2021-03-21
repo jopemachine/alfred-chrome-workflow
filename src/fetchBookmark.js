@@ -1,9 +1,7 @@
-const getChromeBookmark = require('chrome-bookmark-reader').getChromeBookmark;
 const alfy = require('alfy');
 const psl = require('psl');
-const userName = require('os').userInfo().username;
+const _ = require('lodash');
 const conf = require('../conf.json');
-const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Bookmarks`;
 const { parseArgv } = require('./argHandler');
 const {
   extractHostname,
@@ -11,21 +9,27 @@ const {
   getHistoryDB,
   bookmarkDFS,
   getExecPath,
+  getChromeBookmark
 } = require('./utils');
 
 (async function () {
+  const bookmarkRoot = await getChromeBookmark();
   const { options, input } = parseArgv(process.argv);
 
-  let bookmarks = getChromeBookmark(targetPath, {
-    shouldIncludeFolders: options['folderId'] ? true : false,
-  });
+  let bookmarks;
 
   if (options['folderId']) {
-    bookmarks = bookmarkDFS(
-      bookmarks.filter((item) => {
-        return item.id == options['folderId'];
-      })[0]
-    );
+    const folders = bookmarkDFS(bookmarkRoot, { targets: ['folder'] });
+    const targetFolder = _.filter(
+      folders,
+      (item) => item.id == options['folderId']
+    )[0];
+    bookmarks = bookmarkDFS(targetFolder.children, {
+      targets: ['url'],
+      depth: 1,
+    });
+  } else {
+    bookmarks = bookmarkDFS(bookmarkRoot);
   }
 
   if (input !== '') {
@@ -42,7 +46,7 @@ const {
   }
 
   const result = await Promise.all(
-    bookmarks.map(async (item) => {
+    _.map(bookmarks, async (item) => {
       const hostname = psl.get(extractHostname(item.url));
       const ret = {
         title: item.name,
@@ -101,6 +105,7 @@ const {
   } else {
     result.splice(0, 0, {
       valid: true,
+      arg: 'chrome://bookmarks/',
       title: `${result.length} bookmarks were found.`,
     });
   }

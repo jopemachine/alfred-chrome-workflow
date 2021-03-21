@@ -1,16 +1,12 @@
-const getChromeBookmark = require('chrome-bookmark-reader').getChromeBookmark;
 const alfy = require('alfy');
-const userName = require('os').userInfo().username;
-const conf = require('../conf.json');
-const targetPath = `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/Bookmarks`;
-const { getExecPath } = require('./utils');
+const { getChromeBookmark, getExecPath, bookmarkDFS } = require('./utils');
 const { addVariable } = require('./argHandler');
 
 (async function () {
-  let bookmarks = getChromeBookmark(targetPath, { shouldIncludeFolders: true });
+  const bookmarkRoot = await getChromeBookmark();
   const input = alfy.input ? alfy.input.normalize() : null;
 
-  bookmarks = bookmarks.filter((item) => item.type === 'folder');
+  let bookmarks = bookmarkDFS(bookmarkRoot, { targets: ['folder'] });
 
   if (input) {
     bookmarks = bookmarks.filter((item) => {
@@ -25,9 +21,13 @@ const { addVariable } = require('./argHandler');
   }
 
   const result = bookmarks.map((item) => {
+    const len = item.children
+      ? item.children.filter((item) => item.type === 'url').length
+      : 0;
+
     const ret = {
       title: item.name,
-      subtitle: `Include ${item.children.length} items`,
+      subtitle: `Include ${len} items`,
       arg: item.id,
       icon: {
         path: `${getExecPath()}/assets/folder.png`,
