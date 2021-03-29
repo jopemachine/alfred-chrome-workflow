@@ -7,7 +7,7 @@
   </a>
 </h1>
 
-Alfred workflow to search Chrome's queries, bookmarks, history and download logs, and other datas
+Alfred workflow to search Chrome kernel based browser's queries, bookmarks, history and download logs, and other datas
 
 ## 🌈 Features
 
@@ -49,7 +49,7 @@ The prerequisites below are required to use that package.
 
 * Node JS
 
-* [Chrome](https://www.google.com/intl/en/chrome/)
+* [Chrome](https://www.google.com/intl/en/chrome/) or Chrome based browser (Chrome canary, edge, chromium.. etc)
 
 * [Alfred powerpack](https://www.alfredapp.com/powerpack/)
 
@@ -178,6 +178,14 @@ Type: `string (enum)`
 Determines whether to display some string values in Korean or English.
 
 Possible values: `ko` or `en`
+
+* **browser**
+
+Type: `string (enum)`
+
+Select the browser to which you want the workflow to the workflow.
+
+Possible values: `Chrome` or `Chrome Canary` or `Edge` or `Chromium`
 
 * **exclude_domains**
 

@@ -12,8 +12,8 @@
     "node": ">=4"
   },
   "name": "alfred-chrome-workflow",
-  "version": "0.2.5",
-  "description": "Chrome workflow for Alfred 4",
+  "version": "0.2.6",
+  "description": "Chrome kernel based broswer workflow for Alfred 4",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "alfy-init",
@@ -26,17 +26,20 @@
     "url": "git+https://github.com/jopemachine/alfred-chrome-workflow.git"
   },
   "keywords": [
-    "alfred-workflow",
     "alfred",
+    "alfred-workflow",
+    "alfred4-workflow",
     "alfy",
-    "sqlite",
-    "chrome",
     "chrome-search",
     "chrome-download-log",
     "chrome-autofill-data",
     "chrome-media-history",
     "chrome-bookmark",
-    "chrome-history"
+    "chrome-history",
+    "edge",
+    "chrome",
+    "chromium",
+    "chrome-canary"
   ],
   "license": "MIT",
   "homepage": "https://github.com/jopemachine/alfred-chrome-workflow#readme",
