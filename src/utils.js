@@ -1,11 +1,12 @@
 const userName = require('os').userInfo().username;
-const conf = require('../conf.json');
+require('./init.js');
 const sqliteOptions = { readonly: true, fileMustExist: true };
 const fs = require('fs');
 const sqlite = require('better-sqlite3');
 const _ = require('lodash');
 const path = require('path');
 const fsPromise = require('fs').promises;
+const alfy = require('alfy');
 const {
   HISTORY_DB,
   FAVICON_DB,
@@ -13,6 +14,8 @@ const {
   WEB_DATA_DB,
   LOGIN_DATA_DB,
 } = require('./constant');
+
+const conf = alfy.config.get('setting');
 
 const filterExcludeDomain = (datas) => {
   return datas.filter(item => {

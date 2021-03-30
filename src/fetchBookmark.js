@@ -1,7 +1,7 @@
 const alfy = require('alfy');
 const psl = require('psl');
 const _ = require('lodash');
-const conf = require('../conf.json');
+require('./init.js');
 const { parseArgv } = require('./argHandler');
 const {
   extractHostname,
@@ -11,6 +11,8 @@ const {
   getExecPath,
   getChromeBookmark
 } = require('./utils');
+
+const conf = alfy.config.get('setting');
 
 (async function () {
   const bookmarkRoot = await getChromeBookmark();

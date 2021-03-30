@@ -2,7 +2,7 @@ const alfy = require('alfy');
 const path = require('path');
 const byteSize = require('byte-size');
 const psl = require('psl');
-const conf = require('../conf.json');
+require('./init.js');
 const {
   existsAsync,
   getHistoryDB,
@@ -11,6 +11,8 @@ const {
   getLocaleString,
 } = require('./utils');
 const userName = require('os').userInfo().username;
+
+const conf = alfy.config.get('setting');
 
 (async function() {
   let downloadInfos = getHistoryDB()

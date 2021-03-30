@@ -1,7 +1,10 @@
 const _ = require('lodash');
 const alfy = require('alfy');
 const psl = require('psl');
-const conf = require('../conf.json');
+require('./init.js');
+
+const conf = alfy.config.get('setting');
+
 const {
   handleInput,
   decideTargetHistory,

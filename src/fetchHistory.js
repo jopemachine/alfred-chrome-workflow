@@ -1,7 +1,7 @@
 const alfy = require('alfy');
 const fsPromise = require('fs').promises;
 const psl = require('psl');
-const conf = require('../conf.json');
+require('./init.js');
 const { getLocaleString } = require('./utils');
 const {
   filterExcludeDomain,
@@ -14,6 +14,8 @@ const {
   getFaviconDB,
 } = require('./utils');
 const { FAVICON_DB } = require('./constant');
+
+const conf = alfy.config.get('setting');
 
 (async function() {
   let input = alfy.input ? alfy.input.normalize() : '';

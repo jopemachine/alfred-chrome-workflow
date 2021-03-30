@@ -12,14 +12,12 @@
     "node": ">=4"
   },
   "name": "alfred-chrome-workflow",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Chrome kernel based broswer workflow for Alfred 4",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "alfy-init",
-    "preuninstall": "alfy-cleanup",
-    "cp": "cp _conf.json conf.json",
-    "cl": "node tools/precommit.js"
+    "preuninstall": "alfy-cleanup"
   },
   "repository": {
     "type": "git",

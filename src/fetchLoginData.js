@@ -1,5 +1,5 @@
 const alfy = require('alfy');
-const conf = require('../conf.json');
+require('./init.js');
 const { parseArgv } = require('./argHandler');
 const psl = require('psl');
 const {
@@ -7,6 +7,8 @@ const {
   existsAsync,
   extractHostname
 } = require('./utils');
+
+const conf = alfy.config.get('setting');
 
 (async function() {
   const { options, input } = parseArgv(process.argv);

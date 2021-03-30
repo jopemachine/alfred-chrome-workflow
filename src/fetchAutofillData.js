@@ -1,10 +1,11 @@
 const alfy = require('alfy');
-const conf = require('../conf.json');
+require('./init.js');
 const {
   getWebDataDB,
   getLocaleString,
 } = require('./utils');
 const _ = require('lodash');
+const conf = alfy.config.get('setting');
 
 (async function() {
   let input = alfy.input ? alfy.input.normalize() : '';

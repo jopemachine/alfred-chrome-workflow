@@ -2,7 +2,7 @@
 
 const alfy = require('alfy');
 const fsPromise = require('fs').promises;
-const conf = require('../conf.json');
+require('./init.js');
 const { getMediaHistoryDB } = require('./utils');
 const {
   handleInput,
@@ -12,6 +12,8 @@ const {
 } = require('./utils');
 const humanizeDuration = require('humanize-duration');
 const _ = require('lodash');
+
+const conf = alfy.config.get('setting');
 
 (async function() {
   let input = alfy.input ? alfy.input.normalize() : '';
