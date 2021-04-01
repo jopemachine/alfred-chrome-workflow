@@ -12,7 +12,7 @@
     "node": ">=4"
   },
   "name": "alfred-chrome-workflow",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Chrome kernel based broswer workflow for Alfred 4",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
