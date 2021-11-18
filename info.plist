@@ -523,7 +523,7 @@
 	<key>description</key>
 	<string>Chrome kernel based broswer workflow for Alfred 4</string>
 	<key>disabled</key>
-	<true/>
+	<false/>
 	<key>name</key>
 	<string>alfred-chrome-workflow</string>
 	<key>objects</key>

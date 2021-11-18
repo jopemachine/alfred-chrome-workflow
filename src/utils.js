@@ -1,11 +1,10 @@
 const userName = require('os').userInfo().username;
 require('./init.js');
 const sqliteOptions = { readonly: true, fileMustExist: true };
-const fs = require('fs');
 const sqlite = require('better-sqlite3');
 const _ = require('lodash');
 const path = require('path');
-const fsPromise = require('fs').promises;
+const fs = require('fs-extra');
 const alfy = require('alfy');
 const {
   HISTORY_DB,
@@ -85,24 +84,46 @@ const handleInput = (str) => {
   };
 };
 
-const getDBFilePath = (DBFile) => {
+const getDBFilePathWithConf = (DBFile) => {
+  return getDBFilePath(conf['chrome_profile'], DBFile);
+};
+
+const getDBFilePath = (chromeProfilePath, DBFile) => {
   switch (conf['browser']) {
   case 'Chrome Canary':
-    return `/Users/${userName}/Library/Application Support/Google/Chrome Canary/${conf['chrome_profile']}/${DBFile}`;
+    return `/Users/${userName}/Library/Application Support/Google/Chrome Canary/${chromeProfilePath}/${DBFile}`;
   case 'Edge':
-    return `/Users/${userName}/Library/Application Support/Microsoft Edge/${conf['chrome_profile']}/${DBFile}`;
+    return `/Users/${userName}/Library/Application Support/Microsoft Edge/${chromeProfilePath}/${DBFile}`;
   case 'Chromium':
     // 'Chrome Cloud Enrollment' could be wrong (not sure)
-    return `/Users/${userName}/Library/Application Support/Google/Chrome Cloud Enrollment/${conf['chrome_profile']}/${DBFile}`;
+    return `/Users/${userName}/Library/Application Support/Google/Chrome Cloud Enrollment/${chromeProfilePath}/${DBFile}`;
   default:
-    return `/Users/${userName}/Library/Application Support/Google/Chrome/${conf['chrome_profile']}/${DBFile}`;
+    return `/Users/${userName}/Library/Application Support/Google/Chrome/${chromeProfilePath}/${DBFile}`;
+  }
+};
+
+let retryCnt = 0;
+
+const makeRetry = (tryFunction, options = { retry : 100 }) => {
+  return (...args) => {
+    try {
+      return tryFunction(...args);
+    } catch (err) {
+      if (err.code === 'ENOENT') {
+        tryFindUserProfile();
+        if (++retryCnt < options.retry) {
+          return tryFunction(...args);
+        }
+      }
+    }
   }
 };
 
 async function getChromeBookmark() {
-  const bookmarksPath = getDBFilePath('Bookmarks');
+  const bookmarksPath = getDBFilePathWithConf('Bookmarks');
+
   const roots = JSON.parse(
-    await fsPromise.readFile(bookmarksPath, {
+    await fs.readFile(bookmarksPath, {
       encoding: 'utf8',
     })
   ).roots;
@@ -111,31 +132,31 @@ async function getChromeBookmark() {
 }
 
 function getHistoryDB () {
-  const targetPath = getDBFilePath('History');
+  const targetPath = getDBFilePathWithConf('History');
   fs.copyFileSync(targetPath, HISTORY_DB);
   return sqlite(HISTORY_DB, sqliteOptions);
 }
 
 function getFaviconDB () {
-  const targetPath = getDBFilePath('Favicons');
+  const targetPath = getDBFilePathWithConf('Favicons');
   fs.copyFileSync(targetPath, FAVICON_DB);
   return sqlite(FAVICON_DB, sqliteOptions);
 }
 
 function getMediaHistoryDB () {
-  const targetPath = getDBFilePath('Media History');
+  const targetPath = getDBFilePathWithConf('Media History');
   fs.copyFileSync(targetPath, MEDIA_HISTORY_DB);
   return sqlite(MEDIA_HISTORY_DB, sqliteOptions);
 }
 
 function getWebDataDB () {
-  const targetPath = getDBFilePath('Web Data');
+  const targetPath = getDBFilePathWithConf('Web Data');
   fs.copyFileSync(targetPath, WEB_DATA_DB);
   return sqlite(WEB_DATA_DB, sqliteOptions);
 }
 
 function getLoginDataDB () {
-  const targetPath = getDBFilePath('Login Data');
+  const targetPath = getDBFilePathWithConf('Login Data');
   fs.copyFileSync(targetPath, LOGIN_DATA_DB);
   return sqlite(LOGIN_DATA_DB, sqliteOptions);
 }
@@ -275,8 +296,25 @@ const getLocaleString = (datetime, locale) => {
   }
 };
 
+const tryFindUserProfile = (options = { maxTryCount: 100 }) => {
+  let assumeProfileDirIdx = 0;
+
+  const profilePath = path.dirname(getDBFilePath(''));
+
+  while (++assumeProfileDirIdx < (options.maxTryCount || 9999)) {
+    const assumeProfileDirName = `Profile ${assumeProfileDirIdx}`;
+
+    const profileExist = fs.pathExistsSync(path.resolve(profilePath, assumeProfileDirName));
+
+    if (profileExist) {
+      const newSetting = { ...alfy.config.get('setting'), chrome_profile: assumeProfileDirName };
+      alfy.config.set('setting', newSetting);
+      break;
+    }
+  }
+};
+
 module.exports = {
-  getChromeBookmark,
   filterExcludeDomain,
   getExecPath,
   bookmarkDFS,
@@ -285,11 +323,13 @@ module.exports = {
   convertChromeTimeToUnixTimestamp,
   extractHostname,
   decideTargetHistory,
-  getLoginDataDB,
-  getWebDataDB,
-  getHistoryDB,
-  getFaviconDB,
-  getMediaHistoryDB,
   getLocaleString,
   replaceAll,
+  tryFindUserProfile,
+  getChromeBookmark: makeRetry(getChromeBookmark),
+  getLoginDataDB: makeRetry(getLoginDataDB),
+  getWebDataDB: makeRetry(getWebDataDB),
+  getHistoryDB: makeRetry(getHistoryDB),
+  getFaviconDB: makeRetry(getFaviconDB),
+  getMediaHistoryDB: makeRetry(getMediaHistoryDB),
 };
