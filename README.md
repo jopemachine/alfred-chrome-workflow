@@ -308,5 +308,4 @@ Type: `boolean`
 Removes items with duplicate values.
 
 ## License
-
 MIT © [jopemachine](https://github.com/jopemachine/alfred-chrome-workflow)
