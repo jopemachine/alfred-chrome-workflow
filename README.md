@@ -185,7 +185,7 @@ Type: `string (enum)`
 
 Select the browser to which you want the workflow to the workflow.
 
-Possible values: `Chrome` or `Chrome Canary` or `Edge` or `Chromium`
+Possible values: `Chrome` or `Chrome Canary` or `Edge` or `Chromium` or `Brave`
 
 * **exclude_domains**
 
