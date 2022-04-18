@@ -94,6 +94,8 @@ const getDBFilePath = (chromeProfilePath, DBFile) => {
     return `/Users/${userName}/Library/Application Support/Google/Chrome Canary/${chromeProfilePath}/${DBFile}`;
   case 'Edge':
     return `/Users/${userName}/Library/Application Support/Microsoft Edge/${chromeProfilePath}/${DBFile}`;
+  case 'Brave':
+    return `/Users/${userName}/Library/Application Support/BraveSoftware/Brave-Browser/${chromeProfilePath}/${DBFile}`;
   case 'Chromium':
     // 'Chrome Cloud Enrollment' could be wrong (not sure)
     return `/Users/${userName}/Library/Application Support/Google/Chrome Cloud Enrollment/${chromeProfilePath}/${DBFile}`;
