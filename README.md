@@ -49,7 +49,7 @@ The prerequisites below are required to use that package.
 
 * Node JS
 
-* [Chrome](https://www.google.com/intl/en/chrome/) or Chrome based browser (Chrome canary, edge, chromium.. etc)
+* [Chrome](https://www.google.com/intl/en/chrome/) or Chrome based browser (Brave, Chrome Canary, Edge, Chromium.. etc)
 
 * [Alfred powerpack](https://www.alfredapp.com/powerpack/)
 
@@ -73,7 +73,11 @@ If `chrome_profile` is not proper, you could encounter below error.
 
 3. **If your `chrome_profile` is not default, change `chrome_profile` of `conf.json` to your profile name.**
 
-4. **(Optional, Recommended) You can cache favicon images in advance by executing `ch > cache`**
+3. **If your browser is not chrome, change `broswer_dir` of `conf.json` to your install directory.**
+   **Eg: Brave installs itself under "BraveSoftware/Brave-Browser"**
+
+
+5. **(Optional, Recommended) You can cache favicon images in advance by executing `ch > cache`**
 
 By proceeding with the above process, you can assign favicon to the items of `chb` and increase search speed.
 

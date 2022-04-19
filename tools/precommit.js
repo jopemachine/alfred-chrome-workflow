@@ -2,6 +2,7 @@ const fs = require('fs');
 
 const defaultConfig = {
   'browser': 'Chrome',
+  'browser_dir': 'Google/Chrome',
   'locale': 'en',
   'chrome_profile': 'Default',
   'exclude_domains': [
