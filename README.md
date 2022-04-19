@@ -73,9 +73,8 @@ If `chrome_profile` is not proper, you could encounter below error.
 
 3. **If your `chrome_profile` is not default, change `chrome_profile` of `conf.json` to your profile name.**
 
-3. **If your browser is not chrome, change `broswer_dir` of `conf.json` to your install directory.**
+4. **If your browser is not chrome, change `browser_dir` of `conf.json` to your install directory.**
    **Eg: Brave installs itself under "BraveSoftware/Brave-Browser"**
-
 
 5. **(Optional, Recommended) You can cache favicon images in advance by executing `ch > cache`**
 
