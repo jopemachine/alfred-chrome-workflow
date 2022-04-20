@@ -189,7 +189,7 @@ Possible values: `Chrome` or `Chrome Canary` or `Edge` or `Chromium` or `Brave`
 
 * **browserDir**
 
-Type: `string`
+Type: `string | undefined`
 
 If your browser is based on `chromium`, you can manually specify `browser_dir` for your browser path.
 
