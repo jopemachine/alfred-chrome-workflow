@@ -96,28 +96,15 @@ const getDBFilePath = (chromeProfilePath, DBFile) => {
   }
 
   switch (conf['browser']) {
-  case 'Chrome Canary':
-    return `/Users/${userName}/Library/Application Support/Google/Chrome Canary/${chromeProfilePath}/${DBFile}`;
-  case 'Edge':
-    return `/Users/${userName}/Library/Application Support/Microsoft Edge/${chromeProfilePath}/${DBFile}`;
-  case 'Chromium':
-    // 'Chrome Cloud Enrollment' could be wrong (not sure)
-    return `/Users/${userName}/Library/Application Support/Google/Chrome Cloud Enrollment/${chromeProfilePath}/${DBFile}`;
-  default:
-    return `/Users/${userName}/Library/Application Support/Google/Chrome/${chromeProfilePath}/${DBFile}`;
-  }
-  }
-
-  switch (conf['browser']) {
-  case 'Chrome Canary':
-    return `/Users/${userName}/Library/Application Support/Google/Chrome Canary/${chromeProfilePath}/${DBFile}`;
-  case 'Edge':
-    return `/Users/${userName}/Library/Application Support/Microsoft Edge/${chromeProfilePath}/${DBFile}`;
-  case 'Chromium':
-    // 'Chrome Cloud Enrollment' could be wrong (not sure)
-    return `/Users/${userName}/Library/Application Support/Google/Chrome Cloud Enrollment/${chromeProfilePath}/${DBFile}`;
-  default:
-    return `/Users/${userName}/Library/Application Support/Google/Chrome/${chromeProfilePath}/${DBFile}`;
+    case 'Chrome Canary':
+      return `/Users/${userName}/Library/Application Support/Google/Chrome Canary/${chromeProfilePath}/${DBFile}`;
+    case 'Edge':
+      return `/Users/${userName}/Library/Application Support/Microsoft Edge/${chromeProfilePath}/${DBFile}`;
+    case 'Chromium':
+      // 'Chrome Cloud Enrollment' could be wrong (not sure)
+      return `/Users/${userName}/Library/Application Support/Google/Chrome Cloud Enrollment/${chromeProfilePath}/${DBFile}`;
+    default:
+      return `/Users/${userName}/Library/Application Support/Google/Chrome/${chromeProfilePath}/${DBFile}`;
   }
 };
 
