@@ -49,7 +49,7 @@ The prerequisites below are required to use that package.
 
 * Node JS
 
-* [Chrome](https://www.google.com/intl/en/chrome/) or Chrome based browser (Brave, Chrome Canary, Edge, Chromium.. etc)
+* [Chrome](https://www.google.com/intl/en/chrome/) or Chrome based browser (Chrome Canary, Edge, Chromium, Brave.. etc)
 
 * [Alfred powerpack](https://www.alfredapp.com/powerpack/)
 
