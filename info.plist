@@ -521,7 +521,7 @@
 	<key>createdby</key>
 	<string>jopemachine</string>
 	<key>description</key>
-	<string>Chrome kernel based broswer workflow for Alfred 4</string>
+	<string>Chrome kernel based browser workflow for Alfred 4</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
@@ -1776,6 +1776,8 @@
 			<dict>
 				<key>path</key>
 				<string></string>
+				<key>type</key>
+				<integer>1</integer>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.actioninalfred</string>
@@ -2371,8 +2373,8 @@
 		</dict>
 	</dict>
 	<key>version</key>
-	<string></string>
+	<string>0.4.1</string>
 	<key>webaddress</key>
-	<string>https://github.com/jopemachine/alfred-chrome-workflow</string>
+	<string>https://github.com/jopemachine/alfred-chrome-workflow#readme</string>
 </dict>
 </plist>

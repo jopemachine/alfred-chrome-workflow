@@ -9,13 +9,14 @@
   },
   "deprecated": false,
   "engines": {
-    "node": ">=4"
+    "node": ">=12"
   },
   "name": "alfred-chrome-workflow",
-  "version": "0.3.4",
-  "description": "Chrome kernel based broswer workflow for Alfred 4",
+  "version": "0.4.1",
+  "description": "Chrome kernel based browser workflow for Alfred 4",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "xo --fix",
+    "lint": "xo --fix",
     "postinstall": "alfy-init",
     "preuninstall": "alfy-cleanup"
   },
@@ -49,6 +50,8 @@
     "fs-extra": "^10.0.0",
     "humanize-duration": "^3.25.1",
     "lodash": "^4.17.21",
+    "outdent": "^0.8.0",
+    "path-exists": "^4.0.0",
     "psl": "^1.8.0"
   },
   "files": [
@@ -59,5 +62,16 @@
     "conf.json",
     "*.md",
     "cache/empty"
-  ]
+  ],
+  "devDependencies": {
+    "xo": "^0.39.1"
+  },
+  "xo": {
+    "rules": {
+      "camelcase": 0,
+      "unicorn/filename-case": 0,
+      "import/no-unassigned-import": 0,
+      "unicorn/prefer-string-slice": 0
+    }
+  }
 }

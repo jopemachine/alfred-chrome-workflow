@@ -1,65 +1,66 @@
 const alfy = require('alfy');
 const _ = require('lodash');
-const { getChromeBookmark, getExecPath, bookmarkDFS } = require('./utils');
-const { addVariable } = require('./argHandler');
+const {getChromeBookmark, getExecPath, bookmarkDFS} = require('./utils.js');
+const {addVariable} = require('./argHandler.js');
 
 (async function () {
-  const bookmarkRoot = await getChromeBookmark();
-  const input = alfy.input ? alfy.input.normalize() : null;
+	const bookmarkRoot = await getChromeBookmark();
+	const input = alfy.input ? alfy.input.normalize() : null;
 
-  let bookmarks = bookmarkDFS(bookmarkRoot, { targets: ['folder'] });
+	let bookmarks = bookmarkDFS(bookmarkRoot, {targets: ['folder']});
 
-  if (input) {
-    bookmarks = bookmarks.filter((item) => {
-      const name = item.name.toLowerCase();
-      const loweredInput = input.normalize().toLowerCase();
+	if (input) {
+		bookmarks = bookmarks.filter(item => {
+			const name = item.name.toLowerCase();
+			const loweredInput = input.normalize().toLowerCase();
 
-      if (name.includes(loweredInput)) {
-        return true;
-      }
-      return false;
-    });
-  }
+			if (name.includes(loweredInput)) {
+				return true;
+			}
 
-  let result = bookmarks.map((item) => {
-    const len = item.children
-      ? item.children.filter((item) => item.type === 'url').length
-      : 0;
+			return false;
+		});
+	}
 
-    const ret = {
-      title: item.name,
-      subtitle: `Include ${len} items`,
-      arg: item.id,
-      icon: {
-        path: `${getExecPath()}/assets/folder.png`,
-      },
-      variables: {
-        folder: addVariable('folderId', item.id)
-      }
-    };
+	let result = bookmarks.map(item => {
+		const length = item.children ?
+			item.children.filter(item => item.type === 'url').length :
+			0;
 
-    return ret;
-  });
+		const returnValue = {
+			title: item.name,
+			subtitle: `Include ${length} items`,
+			arg: item.id,
+			icon: {
+				path: `${getExecPath()}/assets/folder.png`
+			},
+			variables: {
+				folder: addVariable('folderId', item.id)
+			}
+		};
 
-  result = _.sortBy(result, ['title']);
+		return returnValue;
+	});
 
-  if (result.length === 0) {
-    result.push({
-      valid: true,
-      title: 'No folder were found.',
-      autocomplete: 'No folder were found.',
-      subtitle: '',
-      text: {
-        copy: 'No folder were found.',
-        largetype: 'No folder were found.',
-      },
-    });
-  } else {
-    result.splice(0, 0, {
-      valid: true,
-      title: `${result.length} folder were found.`,
-    });
-  }
+	result = _.sortBy(result, ['title']);
 
-  alfy.output(result);
+	if (result.length === 0) {
+		result.push({
+			valid: true,
+			title: 'No folder were found.',
+			autocomplete: 'No folder were found.',
+			subtitle: '',
+			text: {
+				copy: 'No folder were found.',
+				largetype: 'No folder were found.'
+			}
+		});
+	} else {
+		result.splice(0, 0, {
+			valid: true,
+			title: `${result.length} folder were found.`
+		});
+	}
+
+	alfy.output(result);
 })();

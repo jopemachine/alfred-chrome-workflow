@@ -3,124 +3,139 @@
 const alfy = require('alfy');
 const fsPromise = require('fs').promises;
 require('./init.js');
-const { getMediaHistoryDB } = require('./utils');
 const {
-  handleInput,
-  existsAsync,
-  decideTargetHistory,
-  filterExcludeDomain,
-} = require('./utils');
+	getMediaHistoryDB,
+	handleInput,
+	existsAsync,
+	decideTargetHistory,
+	filterExcludeDomain
+} = require('./utils.js');
 const humanizeDuration = require('humanize-duration');
 const _ = require('lodash');
+const outdent = require('outdent');
 
 const conf = alfy.config.get('setting');
 
-(async function() {
-  let input = alfy.input ? alfy.input.normalize() : '';
-  input = handleInput(input);
-  const isDomainSearch = input.isDomainSearch;
-  const isArtistSearch = input.isArtistSearch;
-  const domainQuery = isDomainSearch ? input.domain : input.query;
-  const artistQuery = isArtistSearch ? input.artist : input.query;
-  const titleQuery = input.query;
+// To do: Remove below codes after resolving `#6`.
+alfy.error('chm is not available now. See #6.');
+process.exit(1);
 
-  let whereStmt = '';
+(async function () {
+	let input = alfy.input ? alfy.input.normalize() : '';
+	input = handleInput(input);
+	const {isDomainSearch} = input;
+	const {isArtistSearch} = input;
+	const domainQuery = isDomainSearch ? input.domain : input.query;
+	const artistQuery = isArtistSearch ? input.artist : input.query;
+	const titleQuery = input.query;
 
-  _.cond([
-    [() => isDomainSearch && isArtistSearch ,
-      () => { whereStmt = `WHERE url LIKE '%${domainQuery}%' AND title LIKE '%${titleQuery}%' AND artist LIKE '%${artistQuery}%'`;}],
-    [() => isDomainSearch && !isArtistSearch,
-      () => { whereStmt = `WHERE url LIKE '%${domainQuery}%' AND (title LIKE '%${titleQuery}%' OR artist LIKE '%${artistQuery}%')`;}],
-    [() => !isDomainSearch && isArtistSearch,
-      () => { whereStmt = `WHERE (url LIKE '%${domainQuery}%' OR title LIKE '%${titleQuery}%') AND artist LIKE '%${artistQuery}%'`;}],
-    [() => !isDomainSearch && !isArtistSearch,
-      () => { whereStmt = `WHERE url LIKE '%${domainQuery}%' OR title LIKE '%${titleQuery}%' OR artist LIKE '%${artistQuery}%'`;}]
-  ]) ();
+	let whereStmt = '';
 
-  const mediaHistoryDB = getMediaHistoryDB();
-  let historys = mediaHistoryDB
-    .prepare(
-      `
-      SELECT position_ms, url, title, artist, source_title
-        FROM playbackSession
-        ${whereStmt}
-        ORDER BY ${conf.chm.sort} DESC
-      `
-    )
-    .all();
+	_.cond([
+		[() => isDomainSearch && isArtistSearch,
+			() => {
+				whereStmt = `WHERE url LIKE '%${domainQuery}%' AND title LIKE '%${titleQuery}%' AND artist LIKE '%${artistQuery}%'`;
+			}],
+		[() => isDomainSearch && !isArtistSearch,
+			() => {
+				whereStmt = `WHERE url LIKE '%${domainQuery}%' AND (title LIKE '%${titleQuery}%' OR artist LIKE '%${artistQuery}%')`;
+			}],
+		[() => !isDomainSearch && isArtistSearch,
+			() => {
+				whereStmt = `WHERE (url LIKE '%${domainQuery}%' OR title LIKE '%${titleQuery}%') AND artist LIKE '%${artistQuery}%'`;
+			}],
+		[() => !isDomainSearch && !isArtistSearch,
+			() => {
+				whereStmt = `WHERE url LIKE '%${domainQuery}%' OR title LIKE '%${titleQuery}%' OR artist LIKE '%${artistQuery}%'`;
+			}]
+	])();
 
-  let deletedItems;
-  const wholeLogLen = historys.length;
+	const mediaHistoryDB = getMediaHistoryDB();
+	let historys = mediaHistoryDB
+		.prepare(
+			outdent`
+			SELECT position_ms, url, title, artist, source_title
+				FROM playbackSession
+				${whereStmt}
+				ORDER BY ${conf.chm.sort} DESC
+			`
+		)
+		.all();
 
-  if (conf.chm.delete_duplicate) {
-    const { targetHistory, deleted } = decideTargetHistory(
-      historys,
-      conf.chm.result_limit
-    );
-    historys = targetHistory;
-    deletedItems = deleted;
-  } else {
-    historys = historys.slice(0, conf.chm.result_limit);
-  }
+	let deletedItems;
+	const wholeLogLength = historys.length;
 
-  let result = await Promise.all(
-    historys.map(async (item) => {
-      // * source_title is domain name
-      // const hostname = psl.get(extractHostname(item.url));
+	if (conf.chm.delete_duplicate) {
+		const {targetHistory, deleted} = decideTargetHistory(
+			historys,
+			conf.chm.result_limit
+		);
+		historys = targetHistory;
+		deletedItems = deleted;
+	} else {
+		historys = historys.slice(0, conf.chm.result_limit);
+	}
 
-      // * not valid!
-      // const viewTime = getLocaleString(convertChromeTimeToUnixTimestamp(item.last_updated_time_s), conf.locale);
-      const hostname = item.source_title;
-      const playTime = humanizeDuration(item.position_ms, { language: conf.locale });
-      const artist = item.artist;
-      const favCache = `cache/${hostname}.png`;
-      !(await existsAsync(favCache)) &&
-        (await fsPromise.writeFile(`cache/${hostname}.png`, item.image_data));
+	let result = await Promise.all(
+		historys.map(async item => {
+			// * Source_title is domain name
+			// const hostname = psl.get(extractHostname(item.url));
 
-      return {
-        hostname,
-        title: item.title,
-        subtitle: artist ? `Artist: ${artist}, Play time: ${playTime}` : `Play time: ${playTime}`,
-        quicklookurl: item.url,
-        arg: item.url,
-        icon: {
-          path: `cache/${hostname}.png`,
-        },
-        text: {
-          copy: item.url,
-          largetype: item.url,
-        },
-        mods: {
-          cmd: {
-            subtitle: 'Press Enter to copy this url to clipboard',
-          },
-        },
-      };
-    })
-  );
+			// * not valid!
+			// const viewTime = getLocaleString(convertChromeTimeToUnixTimestamp(item.last_updated_time_s), conf.locale);
+			const hostname = item.source_title;
+			const playTime = humanizeDuration(item.position_ms, {language: conf.locale});
+			const {artist} = item;
+			const favCache = `cache/${hostname}.png`;
 
-  result = filterExcludeDomain(result);
+			if (!(await existsAsync(favCache))) {
+				await fsPromise.writeFile(`cache/${hostname}.png`, item.image_data);
+			}
 
-  if (result.length === 0) {
-    result.push({
-      valid: true,
-      title: 'No logs were found.',
-      autocomplete: 'No logs were found.',
-      subtitle: '',
-      text: {
-        copy: 'No logs were found.',
-        largetype: 'No logs were found.',
-      },
-    });
-  } else {
-    result.splice(0, 0, {
-      valid: true,
-      title: `${wholeLogLen} logs were found.`,
-      subtitle: `${result.length} shows up ${
-        deletedItems ? `(${deletedItems} deleted due to duplication)` : ''
-      }`,
-    });
-  }
+			return {
+				hostname,
+				title: item.title,
+				subtitle: artist ? `Artist: ${artist}, Play time: ${playTime}` : `Play time: ${playTime}`,
+				quicklookurl: item.url,
+				arg: item.url,
+				icon: {
+					path: `cache/${hostname}.png`
+				},
+				text: {
+					copy: item.url,
+					largetype: item.url
+				},
+				mods: {
+					cmd: {
+						subtitle: 'Press Enter to copy this url to clipboard'
+					}
+				}
+			};
+		})
+	);
 
-  alfy.output(result);
-}) ();
+	result = filterExcludeDomain(result);
+
+	if (result.length === 0) {
+		result.push({
+			valid: true,
+			title: 'No logs were found.',
+			autocomplete: 'No logs were found.',
+			subtitle: '',
+			text: {
+				copy: 'No logs were found.',
+				largetype: 'No logs were found.'
+			}
+		});
+	} else {
+		result.splice(0, 0, {
+			valid: true,
+			title: `${wholeLogLength} logs were found.`,
+			subtitle: `${result.length} shows up ${
+				deletedItems ? `(${deletedItems} deleted due to duplication)` : ''
+			}`
+		});
+	}
+
+	alfy.output(result);
+})();
