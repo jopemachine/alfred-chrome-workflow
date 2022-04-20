@@ -49,7 +49,7 @@ The prerequisites below are required to use that package.
 
 * Node JS
 
-* [Chrome](https://www.google.com/intl/en/chrome/) or Chrome based browser (Chrome canary, edge, chromium.. etc)
+* [Chrome](https://www.google.com/intl/en/chrome/) or Chrome based browser (Chrome Canary, Edge, Chromium, Brave.. etc)
 
 * [Alfred powerpack](https://www.alfredapp.com/powerpack/)
 
@@ -185,7 +185,17 @@ Type: `string (enum)`
 
 Select the browser to which you want the workflow to the workflow.
 
-Possible values: `Chrome` or `Chrome Canary` or `Edge` or `Chromium`
+Possible values: `Chrome` or `Chrome Canary` or `Edge` or `Chromium` or `Brave`
+
+* **browser_dir**
+
+Type: `string | undefined`
+
+If your browser is based on `chromium`, you can manually specify `browser_dir` for your browser path.
+
+This could be useful when you use unsupported browsers (Note that the browser should be based on chromium).
+
+`browser` option is ignored if `browser_dir` is specified.
 
 * **exclude_domains**
 

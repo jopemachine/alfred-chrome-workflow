@@ -37,7 +37,8 @@
     "edge",
     "chrome",
     "chromium",
-    "chrome-canary"
+    "chrome-canary",
+    "brave"
   ],
   "license": "MIT",
   "homepage": "https://github.com/jopemachine/alfred-chrome-workflow#readme",
