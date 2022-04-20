@@ -187,7 +187,7 @@ Select the browser to which you want the workflow to the workflow.
 
 Possible values: `Chrome` or `Chrome Canary` or `Edge` or `Chromium` or `Brave`
 
-* **browserDir**
+* **browser_dir**
 
 Type: `string | undefined`
 
