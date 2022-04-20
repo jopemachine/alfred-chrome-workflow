@@ -193,7 +193,9 @@ Type: `string | undefined`
 
 If your browser is based on `chromium`, you can manually specify `browser_dir` for your browser path.
 
-This could be useful when you use not supported browsers but, which based on chromium.
+This could be useful when you use unsupported browsers (Note that the browser should be based on chromium).
+
+`browser` option is ignored if `browser_dir` is specified.
 
 * **exclude_domains**
 
