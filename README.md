@@ -73,10 +73,7 @@ If `chrome_profile` is not proper, you could encounter below error.
 
 3. **If your `chrome_profile` is not default, change `chrome_profile` of `conf.json` to your profile name.**
 
-4. **If your browser is not chrome, change `browser_dir` of `conf.json` to your install directory.**
-   **Eg: Brave installs itself under "BraveSoftware/Brave-Browser"**
-
-5. **(Optional, Recommended) You can cache favicon images in advance by executing `ch > cache`**
+4. **(Optional, Recommended) You can cache favicon images in advance by executing `ch > cache`**
 
 By proceeding with the above process, you can assign favicon to the items of `chb` and increase search speed.
 
@@ -189,6 +186,14 @@ Type: `string (enum)`
 Select the browser to which you want the workflow to the workflow.
 
 Possible values: `Chrome` or `Chrome Canary` or `Edge` or `Chromium` or `Brave`
+
+* **browserDir**
+
+Type: `string`
+
+If your browser is based on `chromium`, you can manually specify `browser_dir` for your browser path.
+
+This could be useful when you use not supported browsers but, which based on chromium.
 
 * **exclude_domains**
 
@@ -311,4 +316,5 @@ Type: `boolean`
 Removes items with duplicate values.
 
 ## License
+
 MIT © [jopemachine](https://github.com/jopemachine/alfred-chrome-workflow)
