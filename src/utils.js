@@ -128,6 +128,9 @@ const recommendRetry = (tryFunction) => {
 				}
 				process.exit(0);
 			}
+
+			alfy.error(error);
+			process.exit(1);
 		}
 	}
 };
