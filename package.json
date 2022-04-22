@@ -12,7 +12,7 @@
     "node": ">=12"
   },
   "name": "alfred-chrome-workflow",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Chrome kernel based browser workflow for Alfred 4",
   "scripts": {
     "test": "xo --fix",
