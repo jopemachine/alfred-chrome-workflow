@@ -12,7 +12,7 @@
     "node": ">=12"
   },
   "name": "alfred-chrome-workflow",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Chrome kernel based browser workflow for Alfred 4",
   "scripts": {
     "test": "xo --fix",
@@ -72,7 +72,7 @@
       "unicorn/filename-case": 0,
       "import/no-unassigned-import": 0,
       "unicorn/prefer-string-slice": 0,
-	  "unicorn/no-process-exit": 0
+      "unicorn/no-process-exit": 0
     }
   }
 }
