@@ -1071,7 +1071,7 @@
 			<key>config</key>
 			<dict>
 				<key>browser</key>
-				<string>com.google.Chrome</string>
+				<string></string>
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
