@@ -17,9 +17,11 @@ const outdent = require('outdent');
 const conf = alfy.config.get('setting');
 
 // To do: Remove below codes after resolving `#6`.
+
 alfy.error('chm is not available now. See #6.');
 process.exit(1);
 
+// eslint-disable-next-line no-unreachable
 (async function () {
 	let input = alfy.input ? alfy.input.normalize() : '';
 	input = handleInput(input);

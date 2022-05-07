@@ -112,7 +112,7 @@ const getDBFilePath = (chromeProfilePath, DBFile) => {
 	}
 };
 
-const recommendRetry = (tryFunction) => {
+const recommendRetry = tryFunction => {
 	return (...args) => {
 		try {
 			return tryFunction(...args);
@@ -126,13 +126,14 @@ const recommendRetry = (tryFunction) => {
 				} else {
 					alfy.error('Profile not found error');
 				}
+
 				process.exit(0);
 			}
 
 			alfy.error(error);
 			process.exit(1);
 		}
-	}
+	};
 };
 
 async function getChromeBookmark() {
@@ -321,6 +322,7 @@ const tryFindUserProfile = () => {
 			return true;
 		}
 	}
+
 	return false;
 };
 
