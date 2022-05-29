@@ -1,3 +1,9 @@
+# :warning: Deprecated
+
+This workflow is no longer maintained.
+
+If you're looking for a similar workflow, highly recommend using [alfred-chromium-workflow](https://github.com/jopemachine/alfred-chromium-workflow) instead, which reimplemented this workflow's most features.
+
 <h1 align="center">
   <a href="https://www.npmjs.com/package/alfred-chrome-workflow">
 		Alfred-chrome-workflow<br>
